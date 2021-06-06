@@ -1,0 +1,44 @@
+<form [formGroup]="parentForm" (submit)="onSubmit()">
+  <app-input label="Title" [control]="parentForm.get('title')"></app-input>
+
+  <div class="mb-3">
+    <label class="form-label">Parent Group</label>
+    <input
+      class="form-control"
+      formControlName="idcha"
+      list="listName"
+      (change)="onChange($event)"
+    />
+
+    <datalist id="listName">
+      <option
+        *ngFor="let category of nameCategory"
+        [value]="category.title"
+      ></option>
+    </datalist>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Group ong noi</label>
+    <input class="form-control" formControlName="content" list="listgroup" />
+
+    <datalist id="listgroup">
+      <option *ngFor="let group of nameCategory" [value]="group.title"></option>
+    </datalist>
+  </div>
+
+  <app-input label="Content" [control]="parentForm.get('group')"></app-input>
+
+  <app-input
+    label="Description"
+    [control]="parentForm.get('desc')"
+    inputType="textarea"
+  ></app-input>
+
+  <app-input label="Image" [control]="parentForm.get('img')"></app-input>
+
+  <app-text-editor [parentForm]="parentForm"></app-text-editor>
+  <button class="btn btn-primary my-3" [disabled]="parentForm.invalid">
+    Submit
+  </button>
+</form>

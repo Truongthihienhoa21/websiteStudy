@@ -1,0 +1,317 @@
+<div class="p-field p-col-12">
+  <p-card *ngIf="userLists && userAccess; else loadUser">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="Thêm người dùng"
+          icon="pi pi-plus"
+          class="p-button-success p-mr-2"
+          (click)="createUser()"
+        ></button>
+        <button
+          pButton
+          pRipple
+          [label]="Delete"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteSelectedUsers()"
+          [disabled]="!selectedUsers || !selectedUsers.length"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="userLists"
+      [rows]="10"
+      [paginator]="true"
+      [globalFilterFields]="['username', 'email']"
+      [rowHover]="true"
+      dataKey="_id"
+      currentPageReportTemplate="Hiển thị {first} đến {last} của {totalRecords} users"
+      [showCurrentPageReport]="true"
+      [(selection)]="selectedUsers"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <h5 class="p-m-0">Quản lý người dùng</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Tìm kiếm..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pSortableColumn="username">
+            Tên người dùng <p-sortIcon field="username"></p-sortIcon>
+          </th>
+
+          <th pSortableColumn="email" style="width: 300px">
+            Email <p-sortIcon field="username"></p-sortIcon>
+          </th>
+          <th>Password</th>
+          <th>Quyền</th>
+          <th>Khóa học đã mua</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>
+            <p-tableCheckbox [value]="user"></p-tableCheckbox>
+          </td>
+          <td>{{ user.username }}</td>
+
+          <td>
+            <span class="email">
+              {{ user.email }}
+            </span>
+          </td>
+          <td>{{ user.confirmPassword }}</td>
+          <td>
+            <span>{{ user.roleId[user.roleId.length - 1] }}</span>
+          </td>
+          <td>{{ user.learning?.length || 0 }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success p-mr-2"
+              (click)="editUser(user)"
+              [disabled]="
+                (userAccess.priority <= user.priority &&
+                  userAccess.role !== 'admin') ||
+                userAccess.id === user._id
+                  ? true
+                  : false
+              "
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-search"
+              class="p-button-rounded p-mr-2"
+              (click)="viewDetail(user)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteUser(user)"
+              [disabled]="
+                (userAccess.priority <= user.priority &&
+                  userAccess.role !== 'admin') ||
+                userAccess.id === user._id
+                  ? true
+                  : false
+              "
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          Tổng người dùng: {{ userLists ? userLists.length : 0 }}.
+        </div>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <ng-template #loadUser>
+    <div class="p-d-flex p-jc-center p-ai-center" style="height: 600px">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>
+
+<p-dialog
+  [(visible)]="userDialog"
+  [style]="{ width: '550px' }"
+  [header]="
+    userForm && userForm._id ? 'Chỉnh sửa người dùng' : 'Thêm người dùng'
+  "
+  [modal]="true"
+  styleClass="p-fluid"
+  baseZIndex="1000000"
+>
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="name">Tên người dùng</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="userForm.username"
+        required
+        [disabled]="userForm._id"
+      />
+      <small class="p-invalid" *ngIf="submitted && !userForm.username"
+        >Field is required.</small
+      >
+    </div>
+
+    <div class="p-field" *ngIf="!userForm._id">
+      <label for="password">Mật khẩu</label>
+      <input
+        type="password"
+        pInputText
+        id="password"
+        [(ngModel)]="userForm.password"
+        required
+      />
+      <small class="p-invalid" *ngIf="submitted && !userForm.username"
+        >Field is required.</small
+      >
+    </div>
+
+    <div class="p-field">
+      <label class="p-mb-3">Quyền</label>
+
+      <div class="p-formgrid p-grid">
+        <div
+          class="p-field-radiobutton p-col-6"
+          *ngFor="let item of roles; index as i"
+        >
+          <p-radioButton
+            [id]="i"
+            name="role"
+            [value]="item.value"
+            [(ngModel)]="userForm.role"
+          ></p-radioButton>
+          <label for="role1">{{ item.name }}</label>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Hủy bỏ"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Lưu"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveUser()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="userDetailDialog"
+  [style]="{ width: '80vw' }"
+  [modal]="true"
+  styleClass="p-fluid"
+  [draggable]="false"
+  [baseZIndex]="10000000"
+>
+  <ng-template pTemplate="header">
+    <p>Thông tin người dùng</p>
+  </ng-template>
+  <p-divider></p-divider>
+  <ng-template pTemplate="content">
+    <div class="p-grid">
+      <div class="p-col-6">Tên người dùng: {{ userDetail.username }}</div>
+      <div class="p-col-6">Email: {{ userDetail.email }}</div>
+      <div class="p-col-6">Tên: {{ userDetail.firstName }}</div>
+      <div class="p-col-6">Họ: {{ userDetail.lastName }}</div>
+    </div>
+    <p-divider></p-divider>
+    <div class="p-gird">
+      <p-table
+        #dt
+        [value]="userDetail.courses"
+        [scrollable]="true"
+        [rows]="100"
+        scrollHeight="400px"
+        [virtualScroll]="true"
+        [virtualRowHeight]="34"
+        [globalFilterFields]="['title']"
+      >
+        <ng-template pTemplate="caption">
+          <div class="table-header p-d-flex p-jc-between p-ai-center">
+            <p>Thông tin khóa học</p>
+            <span class="p-input-icon-left" style="width: 30%">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder=" Tìm kiếm..."
+              />
+            </span>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Hình ảnh</th>
+            <th>Tên khóa học</th>
+            <th>Giá</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-course let-i="rowIndex">
+          <tr>
+            <td>
+              <img [src]="course.img" alt="" />
+            </td>
+            <td>{{ course.title }}</td>
+            <td>{{ course.price | currency: "VND" }}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+          <tr>
+            <th colspan="2"></th>
+            <th>Tổng cộng: {{ totalPrice | currency: "VND" }}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">Không tìm thấy khóa học</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Đóng"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="userDetailDialog = false"
+    ></button>
+  </ng-template>
+</p-dialog>
+<p-toast [baseZIndex]="1000000"></p-toast>
+
+<p-confirmDialog
+  [style]="{ width: '450px' }"
+  acceptLabel="Đồng ý"
+  rejectLabel="Hủy bỏ"
+>
+</p-confirmDialog>

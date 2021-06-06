@@ -1,0 +1,13 @@
+<div class="mb-4" *ngIf="path$ | async as path">
+  <a [routerLink]="['/']">Home </a>
+
+  <ng-container *ngFor="let item of path; index as i">
+    <a
+      [routerLink]="getRouteLink(i, item)"
+      [class.active]="i === path.length - 1 && !postTitle"
+    >
+      > <span>{{ item.title }}</span>
+    </a>
+  </ng-container>
+  <a *ngIf="postTitle" class="active">> {{ postTitle }}</a>
+</div>

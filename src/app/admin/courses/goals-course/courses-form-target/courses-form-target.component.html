@@ -1,0 +1,38 @@
+<form [formGroup]="parentForm">
+  <div class="learn-goal">
+    <label>{{ label }}</label>
+    <div class="form-goal p-fluid p-formgrid p-grid">
+      <div
+        class="p-grid p-col-12 input-goal"
+        *ngFor="let item of formLists.controls; index as i"
+      >
+        <div class="p-field p-col-8">
+          <input
+            [formControl]="item.get('content')"
+            type="text"
+            pInputText
+            [placeholder]="placeholder"
+          />
+        </div>
+        <div class="p-field p-col-1 icon p-grid">
+          <span class="p-col-6">
+            <i class="pi pi-bars"></i>
+          </span>
+          <span class="p-col-6" (click)="onDelete(i)">
+            <i class="pi pi-trash"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-field p-col-2">
+        <button
+          pButton
+          type="button"
+          label="Thêm câu trả lời"
+          icon="pi pi-plus"
+          (click)="addTarget()"
+        ></button>
+      </div>
+    </div>
+  </div>
+</form>

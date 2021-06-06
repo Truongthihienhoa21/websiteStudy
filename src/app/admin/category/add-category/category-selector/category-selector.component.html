@@ -1,0 +1,19 @@
+<ng-container [formGroup]="parentForm">
+  <form formGroupName="selector" class="mb-3">
+    <app-form-category
+      [parentForm]="formSelector"
+      (idparentChange)="currentid = $event"
+    ></app-form-category>
+
+    <div>
+      <button
+        type="button"
+        class="btn btn-primary px-4"
+        (click)="onAdd()"
+        [disabled]="formSelector.invalid"
+      >
+        Thêm
+      </button>
+    </div>
+  </form>
+</ng-container>

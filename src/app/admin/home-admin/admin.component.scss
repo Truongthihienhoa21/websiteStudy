@@ -1,0 +1,143 @@
+.menu-button {
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0 1.25rem;
+}
+
+header {
+  height: 70px;
+  background: #6200ee;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  z-index: 99999;
+}
+
+#heading {
+  padding: 0 1.25rem;
+  font-size: 1.25rem;
+  white-space: nowrap;
+  text-decoration: none;
+  border-left: 1px solid white;
+}
+
+#user-container {
+  padding: 0 1.25rem;
+  cursor: pointer;
+  border-left: 1px solid white;
+}
+
+#user-container p:first-child {
+  font-size: 1.75rem;
+}
+
+.dropdown-user {
+  position: absolute;
+  top: 65px;
+  right: 5px;
+  width: 8rem;
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-user a {
+  display: inline-block;
+  height: 3rem;
+  line-height: 3rem;
+  width: 100%;
+  text-align: center;
+}
+
+.dropdown-user a:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+nav {
+  background: #ebebeb;
+  height: calc(100vh - 70px);
+  width: 250px;
+  z-index: auto;
+  box-shadow: 2px 0px 2px 0px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition-property: width;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+}
+
+.expanded {
+  width: 250px;
+}
+
+.collapsed {
+  width: 0px;
+}
+
+.nav-container {
+  padding-top: 1.5rem;
+}
+
+.nav-container a {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  width: 100%;
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding-left: 0.5rem;
+  margin-bottom: 1px;
+}
+
+.active {
+  color: #6200ee;
+}
+
+.nav-container a:hover {
+  background-color: #e2e2e2;
+  color: #000000;
+}
+
+main {
+  height: calc(100vh - 70px);
+  width: 100%;
+  padding-top: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+a > span:first-child {
+  text-align: center;
+  width: 2rem;
+}
+
+a > span:nth-last-child(2) {
+  width: 140px;
+}
+
+.nav-item-dropdown > a:first-child {
+  cursor: pointer;
+}
+
+.nav-item-dropdown-contents a {
+  width: 75%;
+  margin: auto;
+}
+
+.nav-item-dropdown-contents {
+  display: none;
+}
+
+.expanded-child {
+  display: block;
+}
+
+.active-dropdown > a:first-child {
+  background: #d9d9d9;
+  color: #6200ee;
+}
+
+.active-dropdown > a:first-child:hover {
+  background-color: #e2e2e2;
+  color: #000000;
+}

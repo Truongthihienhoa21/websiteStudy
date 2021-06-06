@@ -1,0 +1,75 @@
+<div class="container" style="min-height: 80vh">
+  <ng-container *ngIf="coursesInCart$ | async as courses; else loadCourse">
+    <div class="p-grid p-nogutter">
+      <div class="title-cart p-col-12">
+        <p>Giỏ Hàng</p>
+      </div>
+      <div class="total-cart p-col-12">
+        <p>{{ courses.length }} Course in Cart</p>
+      </div>
+
+      <ng-container *ngIf="courses.length; else noCourse">
+        <div class="p-col-9 p-grid p-nogutter">
+          <div
+            class="card-item p-grid p-nogutter p-col-12"
+            *ngFor="let course of courses"
+          >
+            <div class="p-col-8 p-d-flex p-flex-row">
+              <img [src]="course.img" />
+              <div class="title">
+                <p>{{ course.title }}</p>
+                <small>{{ course.author }}</small>
+              </div>
+            </div>
+            <div class="p-col-2 actionOption">
+              <a (click)="removeCourse(course)">Xóa</a>
+            </div>
+            <div class="p-col-2">
+              <p class="price">
+                {{ course.price | currency: "VND" }}
+                <span><i class="pi pi-tag"></i></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-col-3">
+          <p-card>
+            <p style="color: #686f7a">Tổng:</p>
+            <h3 style="margin: 10px 0">
+              {{ totalPrice$ | async | currency: "VND" }}
+            </h3>
+            <button
+              pButton
+              type="button"
+              label="Thanh Toán"
+              class="p-button-danger"
+              routerLink="/category/checkout"
+            ></button>
+          </p-card>
+        </div>
+      </ng-container>
+
+      <ng-template #noCourse>
+        <div class="empty-list p-col-12">
+          <i class="pi pi-shopping-cart" style="font-size: 5rem"></i>
+
+          <p>Giỏ hàng đang rỗng!</p>
+          <p-button
+            label="Keep shopping"
+            routerLink="/category/courses"
+          ></p-button>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <!-- <ng-container *ngIf="relatedCourses">
+
+  </ng-container> -->
+  <ng-template #loadCourse>
+    <div style="display: flex; justify-content: center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>

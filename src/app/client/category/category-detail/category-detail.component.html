@@ -1,0 +1,62 @@
+<div class="container mt-5">
+  <app-path-category [idCategory]="currentId$ | async"></app-path-category>
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="border-1 p-3">
+        <h3 class="card-title">{{ title }}</h3>
+        <p class="ml-3">
+          {{ description }}
+        </p>
+        <div class="body">
+          <div class="row">
+            <div class="col-lg-6 item" *ngFor="let item of arrName$ | async">
+              <a
+                class="flex"
+                [routerLink]="['/category', item.parent.title, item.parent._id]"
+              >
+                <img [src]="item.parent.img" alt="" />
+                <p class="ml-3">{{ item.parent.title }}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="title">{{ "bài viết" | uppercase }}</h2>
+
+      <ng-container *ngIf="posts$ | async as posts; else loadPost">
+        <div class="card p-3" *ngFor="let post of posts">
+          <a
+            [routerLink]="['/category/post', post['_id']]"
+            class="card-title"
+            >{{ post.title }}</a
+          >
+
+          <div class="small">
+            <img [src]="post.img" class="card-img-top" alt="Web mien phi" />
+
+            <p class="ml-3">{{ post.desc }}</p>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #loadPost>
+        <app-loading-placeholder
+          style="position: relative"
+        ></app-loading-placeholder>
+      </ng-template>
+    </div>
+
+    <div class="col-lg-3">
+      <app-review [relate$]="reviews$" title="review">
+        {{ "Xem nhiều" | uppercase }}
+      </app-review>
+    </div>
+  </div>
+
+  <app-pagination
+    *ngIf="numPage$ | async as numPage"
+    [numPage]="numPage"
+    (pageClick)="changePosts($event)"
+  ></app-pagination>
+</div>

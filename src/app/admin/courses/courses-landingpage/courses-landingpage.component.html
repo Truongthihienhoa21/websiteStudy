@@ -1,0 +1,143 @@
+<div class="p-field p-col-12">
+  <p-card>
+    <div class="page" [formGroup]="formLandingPage">
+      <form [formGroup]="formLandingPage" (ngSubmit)="onSubmit()">
+        <div class="p-grid p-fluid p-m-0">
+          <div class="p-col-12">
+            <div class="p-inputgroup p-grid">
+              <span class="p-col-12" for="">Tên </span>
+              <input
+                type="text"
+                class="p-col-12"
+                pInputText
+                placeholder="Tên khóa học"
+                formControlName="title"
+              />
+            </div>
+          </div>
+
+          <div class="p-col-12">
+            <div class="p-inputgroup p-grid">
+              <span class="p-col-12" for="">Phụ đề</span>
+              <input
+                type="text"
+                class="p-col-12"
+                pInputText
+                placeholder="Phụ đề khóa học"
+                formControlName="subtitle"
+              />
+            </div>
+          </div>
+
+          <div class="p-col-12">
+            <div class="p-inputgroup p-grid">
+              <span class="p-col-12" for="">Mô tả khóa học</span>
+              <app-text-editor
+                [parentForm]="formLandingPage"
+                style="width: 100%"
+              ></app-text-editor>
+            </div>
+          </div>
+
+          <div class="p-col-12">
+            <div class="p-grid p-inputgroup">
+              <span class="p-col-12" for="">Thông tin cơ bản</span>
+              <div class="p-col-4 p-pl-0">
+                <p-dropdown
+                  [options]="cities"
+                  formControlName="language"
+                  optionLabel="name"
+                  [showClear]="true"
+                  placeholder="-- Chọn ngôn ngữ --"
+                ></p-dropdown>
+              </div>
+              <div class="p-col-4">
+                <p-dropdown
+                  [options]="levels"
+                  formControlName="level"
+                  optionLabel="name"
+                  [showClear]="true"
+                  placeholder="-- Chọn level --"
+                ></p-dropdown>
+              </div>
+              <div class="p-col-4 p-pr-0">
+                <p-dropdown
+                  [options]="categories"
+                  formControlName="category"
+                  optionLabel="name"
+                  [showClear]="true"
+                  placeholder="-- Chọn Category --"
+                ></p-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-col-12">
+            <div class="p-inputgroup p-grid">
+              <span class="p-col-12" for="">Hình ảnh </span>
+              <input
+                type="text"
+                pInputText
+                placeholder="Chọn ảnh "
+                formControlName="img"
+              />
+            </div>
+          </div>
+
+          <div class="p-col-12">
+            <div class="p-inputgroup p-grid">
+              <span class="p-col-12" for="">Course Video Preview </span>
+              <input
+                type="text"
+                pInputText
+                placeholder="Chọn course preview video"
+                formControlName="preview_video"
+              />
+            </div>
+          </div>
+
+          <div class="p-col-4">
+            <div class="p-inputgroup p-grid">
+              <span class="p-col-12" for="">Giá</span>
+              <input
+                type="number"
+                pInputText
+                placeholder="Giá"
+                formControlName="price"
+              />
+            </div>
+          </div>
+
+          <div class="p-col-4">
+            <div class="p-inputgroup p-grid">
+              <span class="p-col-12" for="">Giảm giá</span>
+              <input
+                type="number"
+                pInputText
+                placeholder="Giảm giá"
+                formControlName="discount"
+              />
+            </div>
+          </div>
+        </div>
+        <p-button label="Save" icon="pi pi-check" type="submit"></p-button>
+      </form>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-nogutter p-justify-end">
+        <p-button
+          label="Tiếp theo"
+          (onClick)="nextPage()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
+
+<p-toast [baseZIndex]="100000"></p-toast>
+<div class="loading" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+</div>

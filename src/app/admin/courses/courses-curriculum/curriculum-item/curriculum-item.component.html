@@ -1,0 +1,113 @@
+<div class="p-col-12 p-px-0">
+  <form [formGroup]="parentForm">
+    <p-card
+      styleClass="curriculum-lists"
+      *ngFor="let item of formLists.controls; index as i"
+    >
+      <ng-template pTemplate="header">
+        <div class="section-info">
+          <span class="section-number">{{
+            "Phần" + " " + (i + 1) + " " + ":"
+          }}</span>
+          <i class="pi pi-book"></i>
+          <input
+            class="section-title"
+            type="text"
+            pInputText
+            [formControl]="item.get('title')"
+            style="width: 450px"
+            placeholder="Nhập tên tiêu đề chương học"
+          />
+
+          <span class="section-action">
+            <i class="pi pi-pencil" (click)="onEditSection(i)"></i>
+            <i class="pi pi-trash" (click)="onDeleteSection(i)"></i>
+          </span>
+        </div>
+
+        <p-divider></p-divider>
+      </ng-template>
+
+      <p-card
+        styleClass="chapter-editor"
+        *ngFor="let itemChapter of getChapter(item); index as j"
+      >
+        <p-panel [toggleable]="true" [collapsed]="true" class="panel">
+          <ng-template pTemplate="header"
+            ><div class="edit-chapter">
+              <i class="pi pi-check"></i>
+
+              <span class="lecture-number">
+                {{ "Bài" + " " + (j + 1) + " " + ":" }}</span
+              >
+              <i class="pi pi-book"></i>
+              <input
+                class="lecture-title"
+                type="text"
+                pInputText
+                [formControl]="itemChapter.get('title')"
+                style="width: 450px"
+                placeholder="Nhập tiêu đề bài học"
+              />
+              <span class="lecture-action">
+                <i class="pi pi-pencil"></i>
+                <i class="pi pi-trash" (click)="onDeleteChapter(item, j)"></i>
+              </span>
+            </div>
+          </ng-template>
+
+          <div class="lecture-content-type">
+            <p-tabView>
+              <p-tabPanel header="Video">
+                <div class="video-upload p-d-flex p-flex-column">
+                  <label>Chọn video</label>
+                  <input
+                    type="text"
+                    pInputText
+                    [formControl]="itemChapter.get('videoUrl')"
+                  />
+                </div>
+              </p-tabPanel>
+              <p-tabPanel header="Video & Slide Mashup">
+                <div class="video-upload p-d-flex p-flex-column p-mb-2">
+                  <label>Chon Video</label>
+                  <input
+                    type="text"
+                    pInputText
+                    [formControl]="itemChapter.get('videoUrl2')"
+                  />
+                </div>
+
+                <div class="pdf-upload p-d-flex p-flex-column">
+                  <label>Chon tài liệu</label>
+                  <input
+                    type="text"
+                    pInputText
+                    [formControl]="itemChapter.get('pdfUrl')"
+                  />
+                </div>
+              </p-tabPanel>
+              <p-tabPanel header="Mô tả">
+                <div class="lecture-desc">
+                  <app-text-editor
+                    [height]="200"
+                    [parentForm]="itemChapter"
+                  ></app-text-editor>
+                </div>
+              </p-tabPanel>
+            </p-tabView>
+          </div>
+        </p-panel>
+      </p-card>
+      <div class="add-lecture">
+        <button (click)="onAddLecture(item)">Thêm bài học</button>
+      </div>
+    </p-card>
+  </form>
+</div>
+
+<p-confirmDialog
+  [style]="{ width: '50vw', top: '-150px' }"
+  [baseZIndex]="100000"
+></p-confirmDialog>
+<p-toast [baseZIndex]="100000"></p-toast>

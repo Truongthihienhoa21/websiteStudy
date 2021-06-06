@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  width: 100%;
+  left: 0;
+  position: absolute;
+
+  .ph-item {
+    border: none;
+    padding: 30px 0;
+  }
+
+  .ph-row div {
+    margin-bottom: 15px;
+  }
+}

@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="p-grid" *ngIf="courses.length; else loadCourse">
+    <p-dataView
+      #dv
+      [value]="courses"
+      [paginator]="true"
+      [rows]="8"
+      filterBy="selectedCategory,title"
+      layout="grid"
+      [sortField]="sortField"
+      [sortOrder]="sortOrder"
+      class="data-view"
+      (onPage)="onChangePage()"
+    >
+      <ng-template pTemplate="header">
+        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+          <p-dropdown
+            [options]="sortPriceOptions"
+            placeholder="Sắp xếp theo giá"
+            (onChange)="onSortChange($event)"
+            styleClass="p-mb-2 p-mb-md-0"
+          ></p-dropdown>
+          <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+            <i class="pi pi-search"></i>
+            <input
+              type="search"
+              pInputText
+              placeholder="Tìm kiếm theo tên"
+              (input)="dv.filter($event.target.value)"
+            />
+          </span>
+          <!-- <p-dropdown
+            [options]="sortCategoriesOptions"
+            placeholder="Sort By Category"
+            styleClass="p-mb-2 p-mb-md-0"
+            (onChange)="dv.filter($event.value)"
+          ></p-dropdown> -->
+          <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+        </div>
+      </ng-template>
+      <ng-template let-course pTemplate="listItem">
+        <div class="p-col-12">
+          <div class="course-list-item">
+            <img [src]="course.img" />
+            <div class="course-list-detail">
+              <div class="course-name">{{ course.title }}</div>
+              <p-rating
+                [readonly]="true"
+                [cancel]="false"
+                [ngModel]="course.rating"
+              ></p-rating>
+
+              <span class="course-category">{{ course.selectedCategory }}</span>
+            </div>
+            <div class="course-list-action">
+              <span class="course-price">{{
+                course.price | currency: "VND"
+              }}</span>
+              <p-button
+                icon="pi pi-shopping-cart"
+                label="Add to cart"
+              ></p-button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template let-course pTemplate="gridItem">
+        <div class="p-col-3 my-4 px-1">
+          <p-card styleClass="course-card">
+            <ng-template pTemplate="header">
+              <img alt="Card" [src]="course.img" />
+            </ng-template>
+            <p class="card-title">{{ course.title }}</p>
+            <span class="author">{{ course.author }}</span>
+
+            <p-rating
+              [readonly]="true"
+              [cancel]="false"
+              [ngModel]="course.rating"
+            >
+            </p-rating>
+
+            <div>{{ course.price | currency: "VND" }}</div>
+
+            <ng-template pTemplate="footer">
+              <p-button
+                [label]="
+                  course.inCart ? 'Đi đến giỏ hàng' : 'Thêm vào giỏ hàng'
+                "
+                icon="pi pi-shopping-cart"
+                (click)="addToCart(course)"
+              ></p-button>
+              <p-button
+                (click)="onNavigate(course._id)"
+                label="Chi tiết"
+                icon="pi pi-info-circle"
+                styleClass="p-button-help"
+              ></p-button>
+            </ng-template>
+          </p-card>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+
+  <ng-template #loadCourse>
+    <div style="display: flex; justify-content: center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>
+
+<p-toast [baseZIndex]="100000"></p-toast>
+
+<div [class]="{ 'overlay-modal': displayDialog }"></div>
+<p-dialog
+  [(visible)]="displayDialog"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="1000000"
+>
+  <ng-template pTemplate="header"> Đăng nhập tài khoản của bạn </ng-template>
+  <p-divider></p-divider>
+  <form [formGroup]="userForm" (submit)="onLogin()">
+    <p class="p-mb-2">Bản phải đăng nhập trước</p>
+    <app-input
+      [control]="userForm.get('username')"
+      label="Tên tài khoản"
+    ></app-input>
+    <app-input
+      [control]="userForm.get('password')"
+      label="Mật khẩu"
+      type="password"
+    ></app-input>
+
+    <button
+      type="submit"
+      pButton
+      label="Đăng nhập"
+      [disabled]="userForm.invalid"
+    ></button>
+  </form>
+  <p-divider></p-divider>
+  <p-footer>
+    <p>
+      Bạn chưa có tài khoản? <span routerLink="/register">Đăng ký ngay</span>
+    </p>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,12 @@
+:host {
+  display: contents;
+  table {
+    table-layout: fixed;
+    border-bottom: 1px solid #dee2e6;
+    td {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

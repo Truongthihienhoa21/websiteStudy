@@ -1,0 +1,180 @@
+<header class="d-flex justify-content-between">
+  <div class="d-flex align-items-center">
+    <a class="menu-button text-light" (click)="toggerSidebar()">
+      <i class="fas fa-bars"></i>
+    </a>
+    <a href="" class="px-4 text-light" id="heading">Trang Admin</a>
+  </div>
+  <div class="d-flex align-items-center flex-row-reverse">
+    <div
+      class="d-flex align-items-center"
+      id="user-container"
+      (click)="toggleUserDropdown()"
+    >
+      <p class="text-light"><i class="fas fa-user-circle"></i></p>
+      <p class="text-light ml-2">{{ user?.username }}</p>
+    </div>
+  </div>
+  <div class="dropdown-user" *ngIf="userDropdown">
+    <a style="cursor: pointer" (click)="onLogout()">Đăng xuất</a>
+  </div>
+</header>
+<div class="d-flex">
+  <nav
+    class="d-flex flex-column justify-content-start"
+    [ngClass]="sidebarToggle ? 'expanded' : 'collapsed'"
+  >
+    <div class="nav-container">
+      <a
+        [routerLink]="['./']"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <span><i class="fas fa-tv"></i></span>
+        <span>Dashboard</span>
+        <span></span>
+      </a>
+      <div
+        class="nav-item-dropdown"
+        [routerLinkActive]="['active-dropdown']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        appDropdown
+      >
+        <a>
+          <span><i class="fas fa-pencil-alt"></i></span>
+          <span>Posts</span>
+          <span class="arrows"><i class="fas fa-chevron-down"></i></span>
+        </a>
+
+        <div class="nav-item-dropdown-contents">
+          <a [routerLink]="['./', 'edit-post']" [routerLinkActive]="['active']"
+            >Quản lý Posts</a
+          >
+          <a [routerLink]="['./', 'add-post']" [routerLinkActive]="['active']"
+            >Tạo mới Post</a
+          >
+        </div>
+      </div>
+      <div
+        class="nav-item-dropdown"
+        [routerLinkActive]="['active-dropdown']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        appDropdown
+      >
+        <a>
+          <span><i class="far fa-list-alt"></i></span>
+          <span>Categories </span>
+          <span class="arrows"><i class="fas fa-chevron-down"></i></span
+        ></a>
+        <div
+          class="nav-item-dropdown-contents"
+          routerLinkActive="expanded-child"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['./', 'edit-category']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Quản lý Categories</a
+          >
+          <a [routerLink]="['./', 'add-category']">Tạo mới Category</a>
+        </div>
+      </div>
+
+      <div
+        class="nav-item-dropdown"
+        [routerLinkActive]="['active-dropdown']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        appDropdown
+      >
+        <a>
+          <span><i class="far fa-list-alt"></i></span>
+          <span>Khóa học </span>
+          <span class="arrows"><i class="fas fa-chevron-down"></i></span
+        ></a>
+        <div
+          class="nav-item-dropdown-contents"
+          routerLinkActive="expanded-child"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['./', 'courses']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Quản lý Courses</a
+          >
+        </div>
+      </div>
+
+      <div
+        class="nav-item-dropdown"
+        [routerLinkActive]="['active-dropdown']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        appDropdown
+      >
+        <a>
+          <span><i class="far fa-list-alt"></i></span>
+          <span>Bài tập</span>
+          <span class="arrows"><i class="fas fa-chevron-down"></i></span
+        ></a>
+        <div
+          class="nav-item-dropdown-contents"
+          routerLinkActive="expanded-child"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['./', 'assignment']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Quản lý Bài tập</a
+          >
+        </div>
+      </div>
+
+      <!-- <div
+        class="nav-item-dropdown"
+        [routerLinkActive]="['active-dropdown']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        appDropdown
+      >
+        <a>
+          <span><i class="far fa-list-alt"></i></span>
+          <span>Payment</span>
+          <span class="arrows"><i class="fas fa-chevron-down"></i></span
+        ></a>
+        <div
+          class="nav-item-dropdown-contents"
+          routerLinkActive="expanded-child"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [routerLink]="['./', 'payment']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Quản lý Payment</a
+          >
+        </div>
+      </div> -->
+
+      <div
+        class="nav-item-dropdown"
+        [routerLinkActive]="['active-dropdown']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        appDropdown
+      >
+        <a>
+          <span><i class="fas fa-users"></i></span>
+          <span>Users</span>
+          <span class="arrows"><i class="fas fa-chevron-down"></i></span
+        ></a>
+        <div class="nav-item-dropdown-contents">
+          <a [routerLink]="['./', 'users']">Quản lý Users</a>
+          <!-- <a>Roles</a> -->
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

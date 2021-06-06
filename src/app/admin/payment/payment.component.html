@@ -1,0 +1,33 @@
+<div class="p-field p-col-12">
+  <p-card>
+    <ng-template pTemplate="header">
+      <h3>Sale Statistics Overview</h3>
+    </ng-template>
+    <p-divider></p-divider>
+    <div class="overall">
+      <p>Click to show detail</p>
+      <div class="sort">
+        <span>1D</span>
+        <span>5D</span>
+        <span>1M</span>
+        <span>1Y</span>
+      </div>
+      <div class="sale-detail">
+        <div class="total-courses">Total courses:</div>
+        <div class="total-revenue">Total revenue:</div>
+      </div>
+    </div>
+    <div class="chart">
+      <canvas
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions1"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [chartType]="'bar'"
+      >
+      </canvas>
+    </div>
+  </p-card>
+</div>

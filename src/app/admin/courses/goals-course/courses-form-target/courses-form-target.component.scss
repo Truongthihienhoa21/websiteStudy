@@ -1,0 +1,36 @@
+:host {
+  .learn-goal {
+    margin-bottom: 40px;
+    .form-goal {
+      margin-top: 5px;
+
+      .input-goal {
+        margin-bottom: 15px;
+        align-items: center;
+
+        .icon {
+          span {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .p-button {
+        font-weight: 700;
+        text-align: center;
+        vertical-align: middle;
+        touch-action: manipulation;
+        cursor: pointer;
+        white-space: nowrap;
+        padding: 11px 12px;
+        font-size: 15px;
+        line-height: 1.35135;
+        border-radius: 2px;
+        color: #007791;
+        background-color: transparent;
+        border: 1px solid transparent;
+        outline: none;
+      }
+    }
+  }
+}

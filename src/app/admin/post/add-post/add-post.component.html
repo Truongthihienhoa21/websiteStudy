@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h3>{{ isEdit ? "Chỉnh sửa Post" : "Tạo mới Post" }}</h3>
+
+      <form [formGroup]="addPostForm" (submit)="onSubmit()">
+        <app-input label="Tên" [control]="addPostForm.get('title')"></app-input>
+
+        <div class="mb-3">
+          <label class="form-label">Category cấp 1</label>
+          <input
+            class="form-control"
+            formControlName="idcha"
+            list="listName"
+            (change)="onChange($event)"
+          />
+
+          <datalist id="listName">
+            <option
+              *ngFor="let category of nameCategory"
+              [value]="category.title"
+            ></option>
+          </datalist>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Category cấp 2</label>
+          <input
+            class="form-control"
+            formControlName="content"
+            list="listgroup"
+          />
+
+          <datalist id="listgroup">
+            <option
+              *ngFor="let group of nameCategory"
+              [value]="group.title"
+            ></option>
+          </datalist>
+        </div>
+
+        <app-input
+          label="Nhóm"
+          [control]="addPostForm.get('group')"
+        ></app-input>
+
+        <app-input
+          label="Giới thiệu"
+          [control]="addPostForm.get('desc')"
+          inputType="textarea"
+        ></app-input>
+
+        <app-input
+          label="Hình ảnh"
+          [control]="addPostForm.get('img')"
+        ></app-input>
+        <label>Nội dung</label>
+        <app-text-editor [parentForm]="addPostForm"></app-text-editor>
+        <button class="btn btn-primary my-3" [disabled]="addPostForm.invalid">
+          Hoàn thành
+        </button>
+      </form>
+      <app-swal-alert></app-swal-alert>
+    </div>
+  </div>
+</div>

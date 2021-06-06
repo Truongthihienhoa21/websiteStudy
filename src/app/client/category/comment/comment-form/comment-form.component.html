@@ -1,0 +1,25 @@
+<div class="card-body">
+  <form [formGroup]="commentForm" (submit)="submitComment()">
+    <app-text-editor mode="review" [parentForm]="commentForm"></app-text-editor>
+    <div class="row my-4">
+      <div class="col-lg-6">
+        <app-input
+          [control]="commentForm.get('username')"
+          label="Name"
+        ></app-input>
+      </div>
+      <div class="col-lg-6">
+        <app-input
+          [control]="commentForm.get('email')"
+          label="Email"
+        ></app-input>
+      </div>
+      <!-- <div class="col-lg-4">
+        <app-input label="Capcha"></app-input>
+      </div> -->
+    </div>
+    <button class="btn btn-primary" [disabled]="commentForm.invalid">
+      Đăng bình luận
+    </button>
+  </form>
+</div>

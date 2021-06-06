@@ -1,0 +1,128 @@
+<div class="" style="min-height: 80vh">
+  <form [formGroup]="formUserInfo" (submit)="onSubmit()" *ngIf="userInfo">
+    <div class="p-grid p-m-0">
+      <div class="p-col-3 menu-left p-p-0">
+        <h3 class="profile-title">Hình ảnh</h3>
+
+        <div class="profile-picture">
+          <p class="p-mb-1">Image preview</p>
+          <span class="help-block"
+            >Minimum 200x200 pixels, Maximum 6000x6000 pixels</span
+          >
+          <div class="picture-preview p-mt-2">
+            <div class="img">
+              <img [src]="formUserInfo.value.img || defaultimg" alt="" />
+            </div>
+          </div>
+          <div class="upload-img">
+            <app-input
+              [control]="formUserInfo.get('img')"
+              label="Select Image"
+            ></app-input>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-7" style="padding-bottom: 0">
+        <div class="p-grid">
+          <div class="p-col-12 content" style="text-align: center">
+            <h3>Thông tin</h3>
+            <p>Thêm thông tin của bạn</p>
+          </div>
+
+          <div class="p-col-12 content">
+            <div class="p-col-9 p-py-0 m-auto">
+              <app-input
+                [control]="formUserInfo.get('firstName')"
+                label="Tên"
+              ></app-input>
+            </div>
+            <div class="p-col-9 p-py-0 m-auto">
+              <app-input
+                [control]="formUserInfo.get('lastName')"
+                label="Họ"
+              ></app-input>
+            </div>
+            <div class="p-col-9 p-py-0 m-auto">
+              <app-input
+                [control]="formUserInfo.get('headline')"
+                label="Headline"
+                [placeholder]="placeholderHeadline"
+              ></app-input>
+            </div>
+            <div class="p-col-9 p-py-0 m-auto">
+              <app-input
+                [control]="formUserInfo.get('biography')"
+                label="Tiểu sử"
+                inputType="textarea"
+              ></app-input>
+            </div>
+            <div class="p-col-9 p-py-0 m-auto">
+              <label>Ngôn ngữ</label>
+              <p-dropdown
+                [options]="languages"
+                formControlName="language"
+                optionLabel="name"
+                [showClear]="true"
+                placeholder="-- Chọn ngôn ngữ --"
+              ></p-dropdown>
+            </div>
+          </div>
+
+          <div class="p-col-12 content p-py-4">
+            <form [formGroup]="formSocial">
+              <div class="p-col-9 p-py-0 m-auto">
+                <app-input
+                  [inputPrimeNg]="true"
+                  label="Website (http(s)://..)"
+                  primeNgAddon="Website"
+                  [control]="formSocial.get('website')"
+                ></app-input>
+              </div>
+
+              <div class="p-col-9 p-py-0 m-auto">
+                <app-input
+                  [inputPrimeNg]="true"
+                  label="Facebook Profile"
+                  primeNgAddon='<i class="pi pi-facebook"></i>'
+                  [control]="formSocial.get('facebook')"
+                ></app-input>
+              </div>
+
+              <div class="p-col-9 p-py-0 m-auto">
+                <app-input
+                  [inputPrimeNg]="true"
+                  label="Twitter Profile"
+                  primeNgAddon='<i class="pi pi-twitter"></i>'
+                  [control]="formSocial.get('twitter')"
+                ></app-input>
+              </div>
+
+              <div class="p-col-9 p-py-0 m-auto">
+                <app-input
+                  [inputPrimeNg]="true"
+                  [control]="formSocial.get('youtube')"
+                  label="Youtube Profile"
+                  primeNgAddon='<i class="pi pi-youtube"></i>'
+                ></app-input>
+              </div>
+            </form>
+          </div>
+          <div class="p-col-12 content">
+            <button
+              pButton
+              pRipple
+              type="submit"
+              label="Save"
+              class="p-button-danger"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<p-toast [baseZIndex]="1000000"></p-toast>
+<div class="loading" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+</div>

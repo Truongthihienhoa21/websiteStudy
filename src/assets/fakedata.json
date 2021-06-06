@@ -1,0 +1,44 @@
+{
+  "objective": [
+    "Become an advanced, confident, and modern JavaScript developer from scratch",
+    "Build 6 beautiful real-world projects for your portfolio (not boring toy apps)"
+  ],
+  "course_requirements": [
+    "No coding experience is necessary to take this course! I take you from beginner to expert!",
+    "Any computer and OS will work — Windows, macOS or Linux. We will set up your text editor the course."
+  ],
+  "course_content": [
+    {
+      "chapter": 1,
+      "title": "Introduction",
+      "lecture": [
+        {
+          "lecture": 1,
+          "title": "this is introduction",
+          "description": "If you’re intending to offer your course for free, the total length of video content must be less than 2 hours."
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "JS fundamental",
+      "lecture": [
+        {
+          "lecture": 1,
+          "title": "section intro",
+          "description": "If you’re intending to offer your course for free, the total length of video content must be less than 2 hours."
+        },
+        {
+          "lecture": 2,
+          "title": "hello word",
+          "description": "If you’re intending to offer your course for free, the total length of video content must be less than 2 hours."
+        }
+      ]
+    }
+  ],
+  "course_description": "Become a Python Programmer and learn one of employer's most requested skills of 2021! This is the most comprehensive, yet straight-forward, course for the Python programming language on Udemy! Whether you have never programmed before, already know basic syntax, or want to learn about the advanced features of Python, this course is for you! In this course we will teach you Python 3.",
+  "course_target_student": [
+    "Beginners who have never programmed before.",
+    "Programmers switching languages to Python."
+  ]
+}

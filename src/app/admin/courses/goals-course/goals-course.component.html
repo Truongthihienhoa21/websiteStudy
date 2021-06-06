@@ -1,0 +1,54 @@
+<div class="p-field p-col-12">
+  <p-card>
+    <p class="title">
+      Mô tả khóa học sẽ giúp học viên quyết định có nên tham gia khóa học của
+      bạn
+    </p>
+
+    <form [formGroup]="targetForm" (ngSubmit)="onSave()">
+      <app-courses-form-target
+        [parentForm]="targetForm"
+        field="goal"
+        [label]="label_target"
+        [placeholder]="placeholder_target"
+      ></app-courses-form-target>
+
+      <app-courses-form-target
+        [parentForm]="targetForm"
+        field="require"
+        [label]="label_require"
+        [placeholder]="placeholder_require"
+      ></app-courses-form-target>
+
+      <app-courses-form-target
+        [parentForm]="targetForm"
+        field="target_student"
+        [label]="label_target_student"
+        [placeholder]="placeholder_target_student"
+      ></app-courses-form-target>
+
+      <p-button label="Lưu" icon="pi pi-check" type="submit"></p-button>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-nogutter p-justify-between p-col-8 p-px-0">
+        <p-button
+          label="Quay lại"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+        ></p-button>
+        <p-button
+          label="Hoàn tất"
+          (onClick)="onSubmit()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
+
+<p-toast [baseZIndex]="100000"></p-toast>
+<div class="loading" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+</div>

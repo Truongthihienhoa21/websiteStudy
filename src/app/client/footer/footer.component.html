@@ -1,0 +1,17 @@
+<section id="footer" *ngIf="showHeaderFooter">
+  <div class="container">
+    <div class="row text-center text-xs-center text-sm-left text-md-left">
+      <div
+        *ngFor="let footer of listFooter"
+        class="col-xs-12 col-sm-3 col-md-3"
+      >
+        <h5>{{ footer.name }}</h5>
+        <ul class="list-unstyled quick-links">
+          <li *ngFor="let item of footer.listFooter">
+            <a href="https://www.fiverr.com/share/qb8D02">{{ item }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

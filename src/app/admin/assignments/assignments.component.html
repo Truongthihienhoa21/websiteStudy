@@ -1,0 +1,51 @@
+<div class="p-field p-col-12">
+  <p-card header="Thêm bài tập">
+    <div class="page">
+      <form [formGroup]="formAssignment" (ngSubmit)="onSubmit()">
+        <div class="p-grid p-fluid p-m-0">
+          <div class="p-col-12">
+            <app-input
+              label="Tên"
+              [control]="formAssignment.get('name')"
+            ></app-input>
+          </div>
+
+          <div class="p-col-12">
+            <app-input
+              label="Mô tả"
+              [control]="formAssignment.get('description')"
+              inputType="textarea"
+            ></app-input>
+          </div>
+
+          <div class="p-col-12">
+            <app-input
+              label="Hình ảnh"
+              [control]="formAssignment.get('img')"
+            ></app-input>
+          </div>
+
+          <div class="p-col-12">
+            <app-assignment-item
+              [parentForm]="formAssignment"
+              (addLecture)="addLecture($event)"
+            ></app-assignment-item>
+          </div>
+        </div>
+
+        <p-button
+          label="Thêm chương mới"
+          (click)="addSection()"
+          class="p-mr-3"
+        ></p-button>
+
+        <p-button label="Hoàn tất" icon="pi pi-check" type="submit"></p-button>
+      </form>
+    </div>
+  </p-card>
+</div>
+
+<p-toast [baseZIndex]="100000"></p-toast>
+<div class="loading" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+</div>

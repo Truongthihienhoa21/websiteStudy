@@ -1,0 +1,100 @@
+<section id="register" class="vh-100">
+  <div class="d-flex justify-content-center w-100 h-100">
+    <div class="card mx-5 my-5 w-100 border-0">
+      <div class="card-header border-0">
+        <a class="h3 px-2 text-primary" routerLink="/login"
+          ><i class="fas fa-arrow-left"></i
+        ></a>
+      </div>
+      <div class="card-body">
+        <div
+          class="row flex-column justify-content-center align-items-center h-100"
+        >
+          <div class="col" style="max-width: 80%">
+            <div class="mb-4">
+              <h1 class="text-center h1">Đăng ký tài khoản</h1>
+              <!-- <p class="text-center">Please input username and password</p> -->
+            </div>
+
+            <form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-6">
+                  <app-input-log
+                    [parentForm]="formRegister"
+                    label="Tên tài khoản"
+                    [submitted]="submitted"
+                    [control]="formRegister.get('username')"
+                    placeholder="hhoa"
+                  ></app-input-log>
+
+                  <app-input-log
+                    [parentForm]="formRegister"
+                    label="Tên"
+                    [submitted]="submitted"
+                    [control]="formRegister.get('firstName')"
+                    placeholder="Hoa"
+                  ></app-input-log>
+
+                  <app-input-log
+                    [parentForm]="formRegister"
+                    label="Họ"
+                    [submitted]="submitted"
+                    [control]="formRegister.get('lastName')"
+                    placeholder="Nguyen"
+                  ></app-input-log>
+                </div>
+                <div class="col-6">
+                  <app-input-log
+                    [parentForm]="formRegister"
+                    label="Email"
+                    [submitted]="submitted"
+                    [control]="formRegister.get('email')"
+                    type="email"
+                    placeholder="hhoa@gmail.com"
+                  ></app-input-log>
+
+                  <app-input-log
+                    [parentForm]="formRegister"
+                    label="Mật khẩu"
+                    [submitted]="submitted"
+                    [control]="formRegister.get('password')"
+                    type="password"
+                    placeholder="123456"
+                  ></app-input-log>
+
+                  <app-input-log
+                    [parentForm]="formRegister"
+                    label="Nhập lại mật khẩu"
+                    [submitted]="submitted"
+                    [control]="formRegister.get('confirmPassword')"
+                    type="password"
+                    placeholder="123456"
+                  ></app-input-log>
+                </div>
+              </div>
+
+              <hr class="mt-4" />
+              <div class="form-group d-flex justify-content-center mb-0 mt-4">
+                <button [disabled]="loading" class="btn btn-primary w-100">
+                  <span
+                    *ngIf="loading"
+                    class="spinner-border spinner-border-sm mr-1"
+                  ></span>
+                  Đăng ký
+                </button>
+              </div>
+            </form>
+            <div class="mt-4">
+              <p class="text-center">
+                Bạn đã có tài khoản?
+                <span><a routerLink="/admin/login">Đăng nhập ngay</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p-toast></p-toast>

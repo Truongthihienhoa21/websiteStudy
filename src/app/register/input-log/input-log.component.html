@@ -1,0 +1,27 @@
+<div class="form-group" style="min-height: 120px">
+  <label class="text-secondary">{{ label }}:</label>
+  <input
+    [type]="type"
+    [formControl]="control"
+    class="form-control"
+    [ngClass]="{
+      'is-invalid': submitted && control.errors
+    }"
+    [placeholder]="placeholder"
+  />
+  <div *ngIf="submitted && control.errors" class="invalid-feedback">
+    <div *ngIf="control.errors.required">{{ label }} is required</div>
+    <div *ngIf="control.errors.email">Email not correct</div>
+    <div *ngIf="control.errors.minlength">
+      {{ label }}
+      Password must contain at least
+      {{ control.errors.minlength.requiredLength }} characters
+    </div>
+  </div>
+
+  <!-- <div *ngIf="submitted && parentForm.errors" class="invalid-feedback">
+    <div *ngIf="label === 'Password' || label === 'Confirm Password'">
+      Password not match
+    </div>
+  </div> -->
+</div>

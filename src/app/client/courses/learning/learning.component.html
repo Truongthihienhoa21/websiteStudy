@@ -1,0 +1,76 @@
+<!-- <div class="header">
+  <div class="container">
+    <h1>My learning</h1>
+  </div>
+</div> -->
+
+<div class="container" style="min-height: 100vh">
+  <ng-container *ngIf="courses; else loadCourse">
+    <div class="p-grid" *ngIf="courses.length > 0; else noCourses">
+      <p-dataView
+        #dv
+        [value]="courses"
+        [paginator]="true"
+        [rows]="16"
+        filterBy="title"
+        layout="grid"
+        class="data-view p-col-12"
+      >
+        <ng-template pTemplate="header">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+            <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+              <i class="pi pi-search"></i>
+              <input
+                type="search"
+                pInputText
+                placeholder="Search by Name"
+                (input)="dv.filter($event.target.value)"
+              />
+            </span>
+            <!-- <p-dropdown
+              [options]="sortCategoriesOptions"
+              placeholder="Filter by Category"
+              styleClass="p-mb-2 p-mb-md-0"
+            ></p-dropdown> -->
+            <!-- <p-dropdown
+              [options]="authorOptions"
+              placeholder="Filter by Author"
+              styleClass="p-mb-2 p-mb-md-0"
+            ></p-dropdown> -->
+          </div>
+        </ng-template>
+
+        <ng-template let-course pTemplate="gridItem">
+          <a
+            class="p-col-3 my-4 card-learning"
+            [routerLink]="['/category/learn', course._id]"
+          >
+            <div class="card-img">
+              <img alt="Card" [src]="course.img" />
+            </div>
+
+            <div class="card-detail">
+              <p class="card-title">{{ course.title }}</p>
+              <span class="author">{{ course.author }}</span>
+            </div>
+
+            <div class="card-progress">
+              <p-progressBar [value]="valueProgress"></p-progressBar>
+              <span>{{ valueProgress }}% Complete</span>
+            </div>
+          </a>
+        </ng-template>
+      </p-dataView>
+    </div>
+
+    <ng-template #noCourses>
+      <h1>no course</h1>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loadCourse>
+    <div style="display: flex; justify-content: center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>

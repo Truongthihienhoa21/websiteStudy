@@ -1,0 +1,118 @@
+<div class="p-field p-col-12">
+  <p-card *ngIf="courses; else loadCourse">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <button
+          pButton
+          pRipple
+          label="Thêm course"
+          icon="pi pi-plus"
+          class="p-button-success p-mr-2"
+          (click)="createCourse()"
+        ></button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table
+      #dt
+      [value]="courses"
+      [rows]="10"
+      [paginator]="true"
+      [globalFilterFields]="['title', 'price', 'category']"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Hiển thị {first} đến {last} của {totalRecords} courses"
+      [showCurrentPageReport]="true"
+      [(selection)]="selectedCourses"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          <h5 class="p-m-0">Quản lý Courses</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Tìm kiếm..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="_kmd.lmt">
+            Ngày tạo <p-sortIcon field="_kmd.lmt"></p-sortIcon>
+          </th>
+          <th pSortableColumn="title" style="width: 20%">
+            Tên <p-sortIcon field="title"></p-sortIcon>
+          </th>
+          <th>Hình ảnh</th>
+          <th pSortableColumn="price">
+            Giá <p-sortIcon field="price"></p-sortIcon>
+          </th>
+          <th pSortableColumn="category">
+            Category <p-sortIcon field="category"></p-sortIcon>
+          </th>
+
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-course>
+        <tr>
+          <td>
+            {{ course._kmd.lmt | date: "dd/MM/yyyy" }}
+          </td>
+          <td>{{ course.title }}</td>
+          <td>
+            <img
+              [src]="course.img"
+              [alt]="course.name"
+              width="100"
+              class="p-shadow-4"
+            />
+          </td>
+          <td>{{ course.price | currency: "USD" }}</td>
+          <td>{{ course.category.name }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success p-mr-2"
+              (click)="editCourse(course)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteCourse(course)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          Tổng cộng: {{ courses ? courses.length : 0 }} khóa học.
+        </div>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <ng-template #loadCourse>
+    <div class="p-d-flex p-jc-center p-ai-center" style="height: 600px">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>
+
+<p-toast [baseZIndex]="1000000"></p-toast>
+<p-confirmDialog
+  [style]="{ width: '450px' }"
+  acceptLabel="Đồng ý"
+  rejectLabel="Hủy bỏ"
+></p-confirmDialog>
+<div class="loading" *ngIf="loading">
+  <p-progressSpinner></p-progressSpinner>
+</div>

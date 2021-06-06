@@ -1,0 +1,84 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+@import "node_modules/placeholder-loading/src/scss/placeholder-loading";
+$primary-color: #2f6e91;
+$text-color: #544e47;
+$secondary-color: #f09217;
+$a-color: #40454d;
+p,
+a {
+  color: $text-color;
+  font-size: 17px;
+  // line-height: 22px;
+  margin: 0;
+}
+
+a {
+  color: $a-color;
+  font-weight: 600;
+}
+
+a:hover {
+  text-decoration: none;
+  color: $secondary-color;
+}
+
+.border-1 {
+  border: 1px solid #e0e0e0;
+}
+
+.title {
+  color: $a-color;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+h2 {
+  color: #315062;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+iframe {
+  width: 100%;
+}
+
+.mt-6 {
+  margin-top: 6rem;
+}
+
+.no-post {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  padding: 0 1.25rem;
+  div {
+    background: rgba(0, 0, 0, 0.03);
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    i.fas {
+      font-size: 60px;
+    }
+
+    p {
+      font-size: 30px;
+      font-weight: 600;
+    }
+  }
+}

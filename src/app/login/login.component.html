@@ -1,0 +1,84 @@
+<section id="login" class="vh-100">
+  <div class="d-flex justify-content-center w-100 h-100">
+    <div class="card mx-5 my-5 w-100 border-0">
+      <div class="card-header border-0">
+        <a class="h3 px-2 text-primary" routerLink="/"
+          ><i class="fas fa-arrow-left"></i
+        ></a>
+      </div>
+      <div class="card-body">
+        <div
+          class="row flex-column justify-content-center align-items-center h-100"
+        >
+          <div class="col" style="max-width: 50%">
+            <div class="mb-4">
+              <h1 class="text-center h1">Đăng nhập</h1>
+              <p class="text-center">Xin chào! Đăng nhập tài khoản của bạn</p>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="username" class="text-secondary"
+                  >Tên tài khoản:</label
+                >
+                <input
+                  type="text"
+                  formControlName="username"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                  [ngClass]="{ 'is-invalid': submitted && loginFail }"
+                  placeholder="Username"
+                />
+                <div
+                  *ngIf="submitted && f.username.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.username.errors.required">
+                    Bạn chưa nhập tên tài khoản
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password" class="text-secondary">Mật khẩu:</label>
+                <input
+                  type="password"
+                  formControlName="password"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                  [ngClass]="{ 'is-invalid': submitted && loginFail }"
+                  placeholder="Password"
+                />
+                <div
+                  *ngIf="submitted && f.password.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.password.errors.required">
+                    Bạn chưa nhập mật khẩu
+                  </div>
+                </div>
+              </div>
+              <hr class="mt-4" />
+              <div class="form-group d-flex justify-content-center mb-0 mt-4">
+                <button [disabled]="loading" class="btn btn-primary w-100">
+                  <span
+                    *ngIf="loading"
+                    class="spinner-border spinner-border-sm mr-1"
+                  ></span>
+                  Đăng nhập
+                </button>
+              </div>
+            </form>
+            <div class="mt-4">
+              <p class="text-center">
+                Bạn chưa có tài khoản?
+                <span><a routerLink="/admin/register">Đăng ký ngay</a></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<p-toast></p-toast>

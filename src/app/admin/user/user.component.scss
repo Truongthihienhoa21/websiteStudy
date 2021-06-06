@@ -1,0 +1,31 @@
+.fas.fa-edit {
+  color: #3699ff;
+}
+
+.fas.fa-trash {
+  color: #f64e60;
+}
+
+
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  .email {
+
+    overflow: hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+
+  }
+}
+
+:host ::ng-deep .p-tooltip {
+  min-width: 300px;
+
+}
+
+:host ::ng-deep .p-tooltip-text {
+  min-width: 300px;
+
+}

@@ -1,0 +1,147 @@
+<div class="container">
+  <div class="p-grid">
+    <div class="p-col-7">
+      <div class="checkout-info">
+        <h2 class="title">Thanh toán</h2>
+
+        <div class="checkout-address">
+          <h3>Địa chỉ:</h3>
+          <p-dropdown
+            [options]="filteredCountries"
+            placeholder="Chọn thành phố"
+            optionLabel="name"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="name"
+          ></p-dropdown>
+        </div>
+
+        <div class="checkout-billing-options">
+          <div class="options-method">
+            <div class="p-field-radiobutton">
+              <p-radioButton
+                name="groupname"
+                value="card"
+                inputId="card"
+                [(ngModel)]="paymentMethod"
+              ></p-radioButton>
+              <label for="card">Thêm phương thức thanh toán mới</label>
+            </div>
+
+            <div class="p-field-radiobutton">
+              <p-radioButton
+                name="groupname"
+                value="paypal"
+                inputId="paypal"
+                [(ngModel)]="paymentMethod"
+              ></p-radioButton>
+              <label for="paypal" class="p-d-flex p-jc-center p-ai-center"
+                >PayPal
+                <img
+                  src="https://s3.amazonaws.com/growth-prototypes/pp_cc_mark_111x69.jpg"
+                  alt="paypal"
+                  width="74px"
+                  style="margin-left: 20px"
+              /></label>
+            </div>
+          </div>
+
+          <div class="payment-method-info">
+            <div class="for-card" *ngIf="paymentMethod === 'card'; else paypal">
+              <p-card class="p-grid">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Name on Card"
+                  class="p-col-12"
+                />
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Card Number"
+                  class="p-col-12"
+                />
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="MM/YY"
+                  class="p-col-6"
+                />
+                <span class="p-col-1" style="display: inline-block"></span>
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Security Code"
+                  class="p-col-5"
+                />
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Zip/Postal Code"
+                  class="p-col-6"
+                />
+              </p-card>
+            </div>
+
+            <ng-template #paypal>
+              <div class="for-paypal">
+                <p-card>
+                  <p class="title">
+                    Để hoàn tất thanh toán, chúng tôi sẽ chuyển bạn đến trang
+                    PayPal's.
+                  </p>
+                </p-card>
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="payment-detail">
+            <h2 class="title">Chi tiết đơn hàng</h2>
+            <ul class="list-items">
+              <li *ngFor="let course of courses">
+                <div class="item p-grid p-nogutter">
+                  <img [src]="course.img" class="p-col-2" />
+                  <p class="name p-col-9">
+                    {{ course.title }}
+                  </p>
+                  <span class="price p-col-1">{{
+                    course.price | currency: "VND"
+                  }}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-col-5">
+      <p-card class="checkout-panel">
+        <div class="complete-checkout">
+          <h2 class="title">Đơn Hàng</h2>
+          <div class="original-price">
+            <span>Giá gốc: </span>
+            <span>{{ originalPrice | currency: "VND" }}</span>
+          </div>
+          <div class="discounts">
+            <span>Giảm giá:</span>
+            <span>{{ discountPrice | currency: "VND" }}</span>
+          </div>
+          <div class="total">
+            <span>Tổng:</span>
+            <span>{{ totalPrice | currency: "VND" }}</span>
+          </div>
+        </div>
+
+        <p-button
+          label="Thanh toán"
+          (click)="onPayment()"
+          *ngIf="showBtn"
+        ></p-button>
+        <div id="paypalbtn"></div>
+      </p-card>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>

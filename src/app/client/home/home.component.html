@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="home-title">
+        <h1 class="title">Học lập trình online miễn phí</h1>
+        <p class="my-3">
+          Freetuts là trang web học lập trình online miễn phí với các chủ đề:
+          lập trình / các môn học / công nghệ / review sản phẩm tốt nhất đến với
+          độc giả.
+        </p>
+
+        <p class="p-box my-4">
+          Tham gia nhóm hỗ trợ cài đặt website WordPress miễn phí
+          <a>tại đây.</a>
+        </p>
+      </div>
+
+      <app-carousel></app-carousel>
+
+      <ng-container *ngIf="tutorial$ | async as tutorial">
+        <app-sub-category
+          class="mt-5"
+          *ngFor="let item of tutorial"
+          [title]="item.posts | getKeyObj"
+          [tutorials]="item.posts | getValueObj"
+        ></app-sub-category>
+      </ng-container>
+    </div>
+    <div class="col-lg-3">
+      <app-review [relate$]="reviews$" title="review">{{
+        "Xem nhiều" | uppercase
+      }}</app-review>
+    </div>
+  </div>
+</div>

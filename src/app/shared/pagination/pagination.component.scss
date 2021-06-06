@@ -1,0 +1,21 @@
+:host {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-link.active {
+  background: #007bff;
+  color: #fff;
+}
+
+.page-item {
+  user-select: none;
+}
+
+.page-item {
+  span {
+    pointer-events: none;
+  }
+}

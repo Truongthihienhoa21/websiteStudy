@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="p-grid" *ngIf="assignments.length; else loadAssign">
+    <p-dataView
+      #dv
+      [value]="assignments"
+      [paginator]="true"
+      [rows]="8"
+      filterBy="selectedCategory,title"
+      layout="grid"
+      [sortField]="sortField"
+      [sortOrder]="sortOrder"
+      class="data-view"
+    >
+      <ng-template pTemplate="header">
+        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+          <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+            <i class="pi pi-search"></i>
+            <input
+              type="search"
+              pInputText
+              placeholder="Search by Name"
+              (input)="dv.filter($event.target.value)"
+            />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template let-assignment pTemplate="gridItem">
+        <div class="p-col-3 my-4 px-1">
+          <a [routerLink]="['/assignment', assignment._id]">
+            <p-card styleClass="assign-card">
+              <ng-template pTemplate="header">
+                <img alt="Card" [src]="assignment.img" />
+              </ng-template>
+              <p class="card-title">{{ assignment.name }}</p>
+              <p class="card-description">{{ assignment.description }}</p>
+
+              <ng-template pTemplate="footer">
+                <span>
+                  <i class="fas fa-desktop"></i>
+                  {{ assignment.total_assign }}</span
+                >
+                <p-button label="Join now" icon="pi pi-info-circle"></p-button>
+              </ng-template>
+            </p-card>
+          </a>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+
+  <ng-template #loadAssign>
+    <div style="display: flex; justify-content: center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  margin-top: 30px;
+
+  .avatar-comment {
+    margin: 0 10px 0 0;
+    float: left;
+    width: 36px;
+    height: 36px;
+    background: #e5e5e5;
+    line-height: 36px;
+    text-align: center;
+    color: #fff !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 18px !important;
+    font-family: arial;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+}
+
+:host.sub {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2px;
+    background: #e5e5e5;
+  }
+}

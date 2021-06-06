@@ -1,0 +1,30 @@
+<div class="modal fade" [class.show]="showModal" (click)="onClose()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <form [formGroup]="formEdit" (submit)="onSubmit()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Chỉnh sửa Category</h5>
+        </div>
+        <div class="modal-body">
+          <app-form-category
+            [parentForm]="formEdit"
+            (idparentChange)="categoryEdit.idparent = $event"
+          ></app-form-category>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="onClose()">
+            Đóng
+          </button>
+          <button
+            class="btn btn-primary"
+            [disabled]="!(isEdit | async) || formEdit.invalid"
+          >
+            Đồng ý
+          </button>
+        </div>
+      </div>
+    </form>
+    <app-swal-alert></app-swal-alert>
+  </div>
+</div>

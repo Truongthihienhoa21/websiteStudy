@@ -1,0 +1,533 @@
+:host ::ng-deep {
+  h2.title {
+    color: hsl(220, 5%, 12%);
+    font-size: 24px;
+    font-weight: 700;
+    gap: normal;
+    letter-spacing: -0.2px;
+    margin-bottom: 24px;
+  }
+}
+
+:host ::ng-deep .p-rating .p-rating-icon.pi-star {
+  color: #f3ca8c;
+}
+
+:host {
+  .course-header {
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0;
+      line-height: 38.4px;
+      margin: 0px 0px 8px;
+    }
+
+    p {
+      font-size: 19px;
+      gap: normal;
+      line-height: 26.6px;
+      margin: 0px 0px 16px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      .header-rating {
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #f3ca8c;
+        margin-right: 5px;
+      }
+    }
+
+    .author {
+      border-color: hsl(0, 0%, 100%);
+      font-size: 14px;
+      gap: normal;
+      line-height: 19.6px;
+
+      span {
+        border-color: hsl(254, 54%, 78%);
+        color: hsl(254, 54%, 78%);
+        font-size: 14px;
+        gap: normal;
+        letter-spacing: -0.2px;
+        line-height: 19.6px;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .course-body {
+  padding-top: 32px;
+  .course-objective {
+    background-color: hsl(200, 23%, 97%);
+    border-color: hsl(207, 14%, 84%);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    color: hsl(220, 5%, 12%);
+    gap: normal;
+    line-height: 22.4px;
+    padding: 24px 24px 16px;
+
+    .course-objective__content {
+      display: flex;
+      align-items: baseline;
+      p {
+        margin-left: 16px;
+        color: hsl(220, 5%, 12%);
+        display: inline;
+        font-size: 14px;
+        gap: normal;
+        line-height: 19.6px;
+        text-align: left;
+      }
+
+      i {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .course-content {
+    margin-top: 50px;
+
+    .curriculum {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+
+      .expand {
+        color: #5624d0;
+        cursor: pointer;
+      }
+    }
+
+    .lecture {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      i {
+        font-size: 24px;
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+        p {
+          margin-left: 14px;
+          color: #1c1d1f;
+          gap: normal;
+          line-height: 19.6px;
+          text-align: left;
+        }
+
+        i {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .course-requirement {
+    margin-top: 50px;
+  }
+
+  .course-description {
+    margin-top: 50px;
+    .showmore {
+      max-height: unset;
+    }
+
+    .showless {
+      max-height: 300px;
+      overflow: hidden;
+    }
+
+    .morelessBtn {
+      .p-button {
+        color: #5624d0;
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  .target-student {
+    margin-top: 50px;
+  }
+}
+
+.overlay-modal {
+  align-items: center;
+  background: rgba(28, 29, 31, 0.8);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition-property: background-color;
+  width: 100%;
+  z-index: 100003;
+}
+
+:host ::ng-deep .p-dialog-headerk {
+  padding-bottom: 1rem;
+}
+
+:host ::ng-deep .p-dialog-title {
+  color: hsl(207, 14%, 84%);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 16.8px;
+  margin: 0px 0px 8px;
+  padding: 24px 0px 0px;
+}
+
+:host ::ng-deep .p-dialog-content {
+  .title {
+    color: hsl(0, 0%, 100%);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    line-height: 22.8px;
+    margin-bottom: 1rem;
+  }
+}
+
+:host ::ng-deep .p-dialog-header,
+:host ::ng-deep .p-dialog-footer,
+:host ::ng-deep .p-dialog-content {
+  background: transparent;
+}
+
+:host ::ng-deep .p-dialog.p-component {
+  background-color: rgb(249, 251, 255);
+  margin: 0px;
+}
+
+iframe {
+  border: unset;
+}
+
+:host :ng-deep .modal-preview {
+  background-color: hsl(220, 5%, 12%);
+  border-color: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 100%);
+  line-height: 22.4px;
+  padding: 0px 24px;
+}
+
+:host ::ng-deep .card-sidebar {
+  z-index: 1;
+  border-bottom: 1px solid #d1d7dc;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+  border-radius: 4px;
+  background-color: #fff;
+
+  .sidebar-intro {
+    position: relative;
+    cursor: pointer;
+    .content {
+      img {
+        width: 100%;
+      }
+
+      .icon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 99;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-direction: column;
+        padding-bottom: 25px;
+
+        span {
+          height: 64px;
+          width: 64px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          background: #fff;
+          i.pi {
+            color: #000;
+          }
+        }
+
+        p {
+          font-weight: 700;
+          line-height: 1.2;
+          letter-spacing: -0.02rem;
+          font-size: 1.6rem;
+          color: #fff;
+          margin-top: 20px;
+        }
+      }
+
+      .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(28, 29, 31, 0) 0%,
+          rgba(28, 29, 31, 0.9) 100%
+        );
+        border: 1px solid #d1d7dc;
+        border-radius: 4px;
+        z-index: 98;
+      }
+    }
+  }
+
+  .sidebar-content {
+    border-color: hsl(220, 5%, 12%);
+    color: hsl(220, 5%, 12%);
+    gap: normal;
+    line-height: 22.4px;
+    padding: 24px;
+    .section-buy {
+      .price {
+        .current-price {
+          border-color: hsl(220, 5%, 12%);
+          color: hsl(220, 5%, 12%);
+          display: inline;
+          font-size: 32px;
+          font-weight: 700;
+          gap: normal;
+          letter-spacing: -0.2px;
+          line-height: 32px;
+        }
+
+        .original-price {
+          border-color: hsl(207, 4%, 43%);
+          color: hsl(207, 4%, 43%);
+          display: inline;
+          gap: normal;
+          line-height: 16px;
+          margin: 0 16px;
+        }
+
+        .discount {
+          border-color: hsl(220, 5%, 12%);
+          color: hsl(220, 5%, 12%);
+          display: inline;
+          gap: normal;
+          line-height: 16px;
+        }
+      }
+
+      .discount-expire {
+        border-color: #b32d0f;
+        color: #b32d0f;
+        margin-top: 10px;
+        i.pi {
+          display: inline;
+          fill: #b32d0f;
+          gap: normal;
+          line-height: 22.4px;
+        }
+
+        span {
+          font-size: 14px;
+          gap: normal;
+          line-height: 19.6px;
+          margin-left: 5px;
+        }
+      }
+
+      .money-back {
+        border-color: #1c1d1f;
+        color: #1c1d1f;
+        font-size: 12px;
+        gap: normal;
+        line-height: 16.8px;
+        margin: 16px 0px 0px;
+        text-align: center;
+      }
+
+      .btn {
+        display: block;
+        width: 100%;
+        font-family: sf pro display;
+        font-weight: 700;
+        gap: normal;
+        justify-content: center;
+        letter-spacing: -0.2px;
+        line-height: 19.2px;
+        padding: 0px 12px;
+        text-align: center;
+        height: 48px;
+        align-items: center;
+        border-radius: 4px;
+      }
+
+      .btn-add {
+        border: 1px solid #a435f0;
+        background-color: #8710d8;
+        color: #ffffff;
+        margin: 16px 0 8px;
+      }
+
+      .btn-buy {
+        border: 1px solid #5624d0;
+        color: #5624d0;
+      }
+    }
+
+    .section-description {
+      margin-top: 16px;
+      h2 {
+        border-color: #1c1d1f;
+        color: #1c1d1f;
+        font-weight: 700;
+        gap: normal;
+        letter-spacing: -0.2px;
+        line-height: 19.2px;
+        margin: 0px 0px 8px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .p-progress-spinner {
+  height: 500px;
+}
+
+:host .related-course {
+  .course-related-container {
+    padding: 16px 0;
+    border-bottom: 1px solid #d7d5d5;
+    justify-content: space-between;
+
+    .main-content {
+      p {
+        color: #3c3b37;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        line-height: 19.2px;
+      }
+    }
+
+    .sub-content {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+
+      .rating {
+        span {
+          margin-right: 5px;
+          color: #be5a0e;
+        }
+        i {
+          color: #be5a0e;
+        }
+      }
+
+      .student {
+        span {
+          margin-left: 5px;
+          color: #3c3b37;
+        }
+
+        i {
+          color: #3c3b37;
+        }
+      }
+
+      .price {
+        color: hsl(48, 4%, 23%);
+        font-size: 14px;
+        font-weight: 700;
+        gap: normal;
+        letter-spacing: -0.2px;
+        line-height: 14px;
+      }
+    }
+  }
+}
+
+
+
+:host ::ng-deep .p-progress-spinner {
+  height: 500px;
+}
+
+:host ::ng-deep .p-dialog-header {
+  padding: 1rem 1.5rem;
+  color: #29303b;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+:host ::ng-deep .p-dialog {
+  p {
+    color: #29303b;
+    font-weight: 700;
+    font-size: 13px;
+  }
+}
+
+:host ::ng-deep .p-dialog-footer {
+  span {
+    color: #007791;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+:host .overlay-modal {
+  align-items: center;
+  background: rgba(28, 29, 31, 0.8);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100003;
+}
+
+:host ::ng-deep .loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10000000;
+}
+
+:host ::ng-deep .p-card-footer {
+  .p-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+:host ::ng-deep .p-dataview-content > .p-nogutter {
+  margin: 0 -0.25rem;
+}

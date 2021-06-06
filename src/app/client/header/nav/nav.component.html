@@ -1,0 +1,47 @@
+<nav>
+  <div class="container">
+    <ul>
+      <li class="dropdown">
+        <a routerLink="/"><i class="fas fa-home"></i></a>
+      </li>
+      <li class="dropdown">
+        <a>{{ Main_block }}</a>
+        <div class="dropdown-page">
+          <div class="row" *ngIf="laptrinh">
+            <div class="col" *ngFor="let child of laptrinh.childs">
+              <a [routerLink]="['/category', child.parent.title]"
+                ><strong>{{ child.parent.title }}</strong></a
+              >
+              <a
+                *ngFor="let item of child.childs"
+                [routerLink]="['/category/detail', item.parent.title]"
+                >{{ item.parent.title }}</a
+              >
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="dropdown">
+        <a [routerLink]="['/category/courses']">{{ Course_block }}</a>
+      </li>
+
+      <li class="dropdown">
+        <a [routerLink]="['/assignment']">{{ Assign_block }}</a>
+      </li>
+
+      <li class="dropdown" *ngFor="let item of anothers">
+        <a [routerLink]="['/category/detail', item.parent.title]">{{
+          item.parent.title
+        }}</a>
+        <div class="dropdown-content">
+          <ng-container *ngFor="let i of item.childs">
+            <a [routerLink]="['/category', i.parent.title, i.parent._id]">
+              {{ i.parent.title }}
+            </a>
+          </ng-container>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

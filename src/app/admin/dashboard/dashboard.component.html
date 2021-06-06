@@ -1,0 +1,113 @@
+<div class="container">
+  <h3>Thống kê Post</h3>
+  <ul class="nav nav-tabs mb-3">
+    <li
+      class="nav-item"
+      *ngFor="let item of type; index as i"
+      (click)="onClick(i)"
+    >
+      <a class="nav-link" [class.active]="currentTab === i">{{ item }}</a>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="from-group col-lg-6" *ngIf="yearSelect && currentTab !== 3">
+      <label for="">Năm</label>
+      <select
+        class="form-select mb-3 form-control"
+        id="year"
+        (change)="changeChart($event)"
+      >
+        <option
+          *ngFor="let item of yearSelect"
+          [selected]="item === currentYear"
+          [value]="item"
+        >
+          {{ item }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-lg-6" *ngIf="monthSelect">
+      <label for="">Tháng</label>
+      <select
+        class="form-select mb-3 form-control"
+        (change)="changeChart($event)"
+        id="month"
+      >
+        <option
+          *ngFor="let item of monthSelect"
+          [value]="item"
+          [selected]="item === currentMonth"
+        >
+          {{ item }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-lg-6" *ngIf="weekSelect">
+      <label for="">Tuần</label>
+      <select
+        class="form-select mb-3 form-control"
+        (change)="changeChart($event)"
+        id="week"
+      >
+        <option
+          *ngFor="let item of weekSelect"
+          [value]="item"
+          [selected]="item === currentWeek"
+        >
+          {{ item }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group col-lg-6" *ngIf="categorySelect && currentTab === 3">
+      <label for="">Category</label>
+      <select
+        class="form-select mb-3 form-control"
+        (change)="changeChart($event)"
+        id="category"
+      >
+        <option [value]="">All</option>
+        <option
+          *ngFor="let item of categorySelect"
+          [value]="item.title"
+          [selected]="item.id === currentCategory"
+        >
+          {{ item.title }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <p *ngIf="currentTab !== 4">
+    Tổng Post: {{ totalPost ? totalPost : "No Post" }}
+  </p>
+
+  <div style="display: block" *ngIf="chartReady && currentTab !== 4">
+    <canvas
+      baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions1"
+      [plugins]="barChartPlugins"
+      [legend]="barChartLegend"
+      [chartType]="'bar'"
+    >
+    </canvas>
+  </div>
+
+  <div style="display: block" *ngIf="chartReady && currentTab === 4">
+    <canvas
+      baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions2"
+      [plugins]="barChartPlugins"
+      [legend]="barChartLegend"
+      [chartType]="'pie'"
+    >
+    </canvas>
+  </div>
+</div>

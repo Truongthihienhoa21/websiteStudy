@@ -1,0 +1,87 @@
+<div class="" style="min-height: 80vh">
+  <div *ngIf="loading" class="spinner">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <div class="content" *ngIf="task">
+    <div class="site-info p-grid p-nogutter">
+      <h3 class="p-col-5 p-px-3">{{ assign.title }}</h3>
+      <div class="another-assign p-col-7">
+        <span
+          *ngFor="let item of assign.chapters; index as i"
+          [ngClass]="{ active: currentId === i }"
+          (click)="onNavigate(i)"
+          >{{ i + 1 }}</span
+        >
+      </div>
+    </div>
+
+    <p-splitter class="split">
+      <ng-template pTemplate>
+        <div class="assign-detail">
+          <h3>Task</h3>
+          <div class="" [innerHtml]="task.html"></div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate>
+        <div class="editor-container">
+          <div class="site-navigation">
+            <div class="left-menu">
+              <p-dropdown
+                [options]="languages"
+                placeholder="Select a languages"
+                optionLabel="name"
+                [showClear]="true"
+                [(ngModel)]="selectedLanguages"
+                (onChange)="onChange($event)"
+                class="p-ml-3"
+              ></p-dropdown>
+
+              <div class="p-ml-3">
+                <p-button
+                  label="Run (F9)"
+                  (click)="postCode()"
+                  [disabled]="!code"
+                ></p-button>
+              </div>
+
+              <div class="p-ml-3">
+                <input type="text" pInputText placeholder="Compiler options" />
+              </div>
+
+              <div class="p-ml-3">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Command line arguments"
+                />
+              </div>
+
+              <div class="p-ml-3 setting">
+                <i class="pi pi-cog"></i>
+                Settings
+              </div>
+            </div>
+          </div>
+
+          <ngx-monaco-editor
+            [options]="editorOptions"
+            [(ngModel)]="code"
+            (init)="editorInit($event)"
+            style="height: 50%"
+          >
+          </ngx-monaco-editor>
+
+          <div class="output">
+            <ul>
+              <li *ngFor="let item of outputProp" class="list-item">
+                <span class="label">{{ item.label }}:</span>
+                <span class="value">{{ item.value }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </p-splitter>
+  </div>
+</div>

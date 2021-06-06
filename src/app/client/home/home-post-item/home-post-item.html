@@ -1,0 +1,54 @@
+<ng-container *ngIf="title !== ''; else hotnew">
+  <h2 class="title col-lg-12">{{ title | uppercase }}</h2>
+  <div class="row">
+    <div class="col-lg-5" *ngIf="newPost">
+      <div class="card big">
+        <div class="card-body">
+          <img [src]="newPost.img" class="card-img-top" alt="" />
+          <a
+            [routerLink]="['/category/post', newPost._id]"
+            class="card-title my-3 d-block"
+            >{{ newPost.title }}</a
+          >
+          <p class="card-text">
+            {{ newPost.desc }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7" *ngIf="subPosts">
+      <div class="card small" *ngFor="let post of subPosts">
+        <img [src]="post.img" class="card-img-top" alt="" />
+
+        <a [routerLink]="['/category/post', post._id]" class="ml-3">
+          {{ post.title }}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <a [routerLink]="['/category/detail', title]"
+      >Xem thêm <i class="fas fa-long-arrow-alt-right"></i
+    ></a>
+  </div>
+</ng-container>
+
+<ng-template #hotnew>
+  <h2 class="title col-lg-12">{{ "bài viết mới" | uppercase }}</h2>
+
+  <div class="row">
+    <div class="col-lg-12 mb-3" *ngFor="let post of tutorials">
+      <div class="card p-3">
+        <a [routerLink]="['/category/post', post._id]" class="card-title">{{
+          post.title
+        }}</a>
+
+        <div class="small">
+          <img [src]="post.img" class="card-img-top" alt="" />
+
+          <p class="ml-3">{{ post.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  min-height: 630px;
+  .w-30 {
+    width: 30%;
+  }
+
+  .fas.fa-edit {
+    color: #3699ff;
+  }
+
+  .fas.fa-trash {
+    color: #f64e60;
+  }
+}

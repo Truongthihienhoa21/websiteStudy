@@ -1,0 +1,137 @@
+:host ::ng-deep {
+  h2.title {
+    color: hsl(220, 5%, 12%);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31.92px;
+  }
+
+  .checkout-info {
+    .checkout-address {
+      h3 {
+        color: hsl(220, 5%, 12%);
+        line-height: 22.88px;
+        font-size: 16px;
+      }
+
+      .p-dropdown {
+        width: 60%;
+      }
+    }
+
+    .checkout-billing-options {
+      .options-method {
+        margin: 20px 0;
+
+        label {
+          margin-bottom: 0;
+        }
+      }
+      .payment-method-info {
+        .for-card {
+          .p-grid {
+            margin: 0;
+          }
+          margin-bottom: 20px;
+          .p-card-body {
+            padding: 2rem;
+          }
+
+          input {
+            margin-bottom: 20px;
+          }
+        }
+
+        .for-paypal {
+          .p-card-body {
+            padding: 0 2rem 2rem;
+          }
+          .title {
+            font-size: 15px;
+            line-height: 1.43;
+            color: #1c1d1f;
+          }
+        }
+      }
+    }
+
+    .payment-detail {
+      margin-top: 50px;
+      .list-items {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+
+        li {
+          margin-bottom: 20px;
+        }
+        .item {
+          justify-content: center;
+          .name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            margin-bottom: 0;
+            max-height: 40px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.43em;
+            color: #1c1d1f;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+
+  .checkout-panel {
+    .complete-checkout {
+      margin-bottom: 20px;
+      .original-price,
+      .discounts,
+      .total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .legal {
+      font-size: 12px;
+      line-height: 19px;
+      margin-bottom: 8px;
+    }
+
+    .p-button {
+      width: 100%;
+      background-color: hsl(276, 86%, 57%);
+      border-color: hsla(0, 0%, 0%, 0);
+      border-radius: 2px;
+      border-style: solid;
+      border-width: 1px;
+      color: hsl(0, 0%, 100%);
+      font-size: 15px;
+      font-weight: 700;
+      gap: normal;
+      line-height: 20.2702px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+  }
+}
+
+:host ::ng-deep .loading {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000000;
+}
+
+:host ::ng-deep .p-progress-spinner {
+  top: 200px;
+}

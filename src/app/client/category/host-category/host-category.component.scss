@@ -1,0 +1,25 @@
+.body {
+  .row {
+    margin: 0;
+    background: #f5f5f5;
+    .item {
+      padding: 15px;
+
+      a {
+        color: #333;
+        font-size: 17px;
+        font-weight: 400;
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        p:hover {
+          color: #f09217;
+        }
+      }
+    }
+  }
+}

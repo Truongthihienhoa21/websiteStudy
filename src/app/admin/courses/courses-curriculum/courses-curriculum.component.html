@@ -1,0 +1,33 @@
+<div class="p-field p-col-10">
+  <p-card header="Nội dung khóa học">
+    <form [formGroup]="formCurriculum" (submit)="onSubmit()">
+      <app-curriculum-item
+        [parentForm]="formCurriculum"
+        (addLecture)="addLecture($event)"
+      ></app-curriculum-item>
+
+      <div class="add-content p-col-12 p-px-0 p-d-flex p-jc-between">
+        <button pButton (click)="addSection()" label="Thêm chương học"></button>
+        <button pButton label="Lưu"></button>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-nogutter p-justify-between p-col-12 p-px-0">
+        <p-button
+          label="Quay lại"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+        ></p-button>
+        <p-button
+          label="Tiếp theo"
+          (onClick)="nextPage()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
+
+<p-toast [baseZIndex]="100000"></p-toast>

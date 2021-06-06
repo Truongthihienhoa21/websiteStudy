@@ -1,0 +1,42 @@
+<form [formGroup]="parentForm">
+  <app-input [control]="parentForm.get('title')" label="Tên"></app-input>
+
+  <div class="mb-3 form-group">
+    <label class="form-label">Category Parent</label>
+    <input
+      list="groupParent"
+      class="form-control"
+      formControlName="group"
+      (change)="onChange($event)"
+    />
+    <datalist id="groupParent">
+      <option
+        *ngFor="let category of categorys"
+        [value]="category.title"
+      ></option>
+    </datalist>
+
+    <ng-container
+      *ngIf="
+        parentForm.get('group').invalid &&
+        parentForm.get('group').touched &&
+        parentForm.get('group').dirty
+      "
+    >
+      <p
+        *ngIf="parentForm.get('group').errors.notFoundCategory"
+        class="text-danger"
+      >
+        Parent category not yet create, please create first
+      </p>
+    </ng-container>
+  </div>
+
+  <app-input [control]="parentForm.get('img')" label="Hình ảnh"></app-input>
+
+  <app-input
+    [control]="parentForm.get('desc')"
+    label="Mô tả"
+    inputType="textarea"
+  ></app-input>
+</form>

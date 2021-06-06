@@ -1,0 +1,57 @@
+<div class="container mt-5">
+  <app-path-category [idCategory]="currentId$ | async"></app-path-category>
+
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="border-1 p-3">
+        <ng-container *ngIf="category$ | async as category">
+          <h1 class="title mb-2">{{ category.title }}</h1>
+          <div class="row my-4">
+            <div class="col-lg-9">
+              <p class="mb-5">
+                {{ category.desc }}
+              </p>
+            </div>
+            <div class="col-lg-3">
+              <div>
+                <img [src]="category.img" alt="" class="w-100" />
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- content -->
+        <ng-container *ngIf="currentLessons$ | async as lessons; else loadPost">
+          <ul class="list-group mb-5" *ngFor="let lesson of lessons">
+            <li class="list-group-item active" *ngIf="lesson | getKeyObj">
+              {{ lesson | getKeyObj }}
+            </li>
+            <li class="list-group-item active" *ngIf="!(lesson | getKeyObj)">
+              Danh sách bài học
+            </li>
+            <li
+              class="list-group-item"
+              *ngFor="let item of lesson | getValueObj"
+            >
+              <a [routerLink]="['/category/post', item._id]">
+                {{ item.title }}</a
+              >
+            </li>
+          </ul>
+        </ng-container>
+
+        <ng-template #loadPost>
+          <app-loading-placeholder
+            style="position: relative; height: 500px"
+          ></app-loading-placeholder>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="col-lg-3">
+      <app-review [relate$]="reviews$" title="review">
+        {{ "Xem nhiều" | uppercase }}
+      </app-review>
+    </div>
+  </div>
+</div>

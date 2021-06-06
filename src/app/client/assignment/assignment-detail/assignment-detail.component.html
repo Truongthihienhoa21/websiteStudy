@@ -1,0 +1,29 @@
+<div class="container" style="min-height: 80vh">
+  <div
+    class="p-grid"
+    *ngIf="assignment$ | async as assignment; else loadAssign"
+  >
+    <div class="p-col-6" *ngFor="let item of assignment; index as i">
+      <p-card>
+        <span class="assign-title">
+          {{ item.title }}
+        </span>
+
+        <ng-template pTemplate="footer">
+          <a
+            [routerLink]="['./', i + 1, j + 1]"
+            *ngFor="let task of item.chapters; index as j"
+            class="assign-btn"
+            >{{ j + 1 }}
+          </a>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+
+  <ng-template #loadAssign>
+    <div style="display: flex; justify-content: center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>

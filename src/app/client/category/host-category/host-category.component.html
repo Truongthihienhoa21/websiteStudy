@@ -1,0 +1,43 @@
+<div class="container mt-5">
+  <app-path-category [idCategory]="currentId$ | async"></app-path-category>
+
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="border-1 p-3">
+        <h1 class="title mb-2">{{ this.currentRoute }}</h1>
+        <p class="my-4">
+          {{ description }}
+        </p>
+
+        <ng-container *ngIf="subCategory$ | async as categorys; else loadCate">
+          <div class="body mb-5" *ngFor="let item of categorys">
+            <h2 class="mb-3">{{ item.parent.title }}</h2>
+            <div class="row">
+              <div class="col-lg-6 item" *ngFor="let child of item.childs">
+                <a
+                  class="flex"
+                  [routerLink]="['../', child.parent.title, child.parent._id]"
+                >
+                  <img [src]="child.parent.img" alt="" />
+                  <p class="ml-3">{{ child.parent.title }}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #loadCate>
+          <app-loading-placeholder
+            style="position: relative; height: 500px"
+          ></app-loading-placeholder>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="col-lg-3">
+      <app-review [relate$]="reviews$" title="review">
+        {{ "Xem nhiều" | uppercase }}
+      </app-review>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.list-group {
+  border-radius: 0;
+  .list-group-item {
+    a {
+      cursor: pointer;
+    }
+
+    &.current {
+      color: #f09217;
+    }
+
+    &.title {
+      background: #008000;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+    }
+  }
+}

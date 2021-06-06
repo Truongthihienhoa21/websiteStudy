@@ -1,0 +1,21 @@
+<div class="container">
+  <h3 class="mb-3">Tạo mới Category</h3>
+
+  <form [formGroup]="categoryForm" (submit)="onSubmit()">
+    <app-category-selector
+      [parentForm]="categoryForm"
+      (added)="addCategory($event)"
+    ></app-category-selector>
+
+    <app-category-list
+      [parentForm]="categoryForm"
+      (removed)="onRemove($event)"
+    ></app-category-list>
+
+    <button type="submit" class="btn btn-primary" *ngIf="listForm.length > 0">
+      Gửi
+    </button>
+  </form>
+
+  <app-swal-alert></app-swal-alert>
+</div>

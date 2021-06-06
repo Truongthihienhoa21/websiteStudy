@@ -1,0 +1,149 @@
+<div class="p-field p-col-12">
+  <p-table
+    #dt
+    [value]="payments"
+    dataKey="id"
+    styleClass="p-datatable-customers"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="['orderBy', 'status']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        List of Payments
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Global Search"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th pSortableColumn="orderBy">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Order By
+            <p-sortIcon field="orderBy"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="orderBy"
+              display="menu"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="courses">
+          Purchased
+          <p-sortIcon field="courses"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="date">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Date
+            <p-sortIcon field="date"></p-sortIcon>
+            <!-- <p-columnFilter
+                type="date"
+                field="date"
+                display="menu"
+                class="p-ml-auto"
+              ></p-columnFilter> -->
+          </div>
+        </th>
+
+        <th pSortableColumn="price">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Price
+            <p-sortIcon field="price"></p-sortIcon>
+            <p-columnFilter
+              type="numeric"
+              field="price"
+              display="menu"
+              currency="USD"
+              class="p-ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="status">
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Status
+            <p-sortIcon field="status"></p-sortIcon>
+            <p-columnFilter
+              field="status"
+              matchMode="equals"
+              display="menu"
+              class="p-ml-auto"
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+              >
+                <p-dropdown
+                  [ngModel]="value"
+                  [options]="statuses"
+                  (onChange)="filter($event.value)"
+                  placeholder="Any"
+                >
+                  <ng-template let-option pTemplate="item">
+                    <span [class]="'customer-badge status-' + option.value">{{
+                      option.label
+                    }}</span>
+                  </ng-template>
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-payment>
+      <tr class="p-selectable-row">
+        <td>
+          <span class="p-column-title">ID</span>
+          {{ payment.id }}
+        </td>
+        <td>
+          <span class="p-column-title">Name</span>
+          {{ payment.orderBy }}
+        </td>
+
+        <td>
+          <span class="p-column-title">Name</span>
+          {{ payment.courses }}
+        </td>
+
+        <td>
+          <span class="p-column-title">Name</span>
+          {{ payment.date | date: "MM-dd-yyyy" }}
+        </td>
+
+        <td>
+          <span class="p-column-title">Name</span>
+          {{ payment.price | currency: "USD":"symbol" }}
+        </td>
+
+        <td>
+          <span class="p-column-title">Name</span>
+          {{ payment.status | titlecase }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No payment found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

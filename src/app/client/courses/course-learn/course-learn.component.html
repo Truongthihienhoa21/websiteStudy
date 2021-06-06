@@ -1,0 +1,39 @@
+<div class="p-grid" style="min-height: 100vh">
+  <ng-container *ngIf="course$ | async as course">
+    <div class="p-col-8">
+      <iframe [src]="videoUrl | safeUrl" width="100%" height="600px"></iframe>
+    </div>
+
+    <div class="p-col-4 course-content">
+      <p-card header="Course content">
+        <p-divider></p-divider>
+        <p-accordion
+          [multiple]="true"
+          (onOpen)="onTabOpen($event)"
+          #accor
+          activeIndex="0"
+        >
+          <ng-container *ngFor="let item of course.section; index as idx">
+            <p-accordionTab [header]="item.title">
+              <div
+                class="lecture"
+                *ngFor="let lecture of item.chapter; index as i"
+              >
+                <div
+                  class="title"
+                  (click)="selectLecture(lecture, i, idx)"
+                  [ngClass]="{
+                    active: currentLecture === i && currentTab === idx
+                  }"
+                >
+                  <span>{{ i + 1 }}. </span>
+                  <p>{{ lecture.title }}</p>
+                </div>
+              </div>
+            </p-accordionTab>
+          </ng-container>
+        </p-accordion>
+      </p-card>
+    </div>
+  </ng-container>
+</div>

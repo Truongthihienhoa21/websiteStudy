@@ -1,0 +1,109 @@
+:host ::ng-deep {
+  .curriculum-lists {
+    background: #f2f3f5;
+    margin-bottom: 50px;
+    .p-card-body {
+      padding: 0 16px;
+    }
+    .section-info {
+      padding: 16px;
+      padding-bottom: 0;
+      .section-number {
+        font-weight: 700;
+        margin-right: 5px;
+      }
+
+      .section-title {
+        margin: 0 5px;
+      }
+
+      .section-action {
+        margin-left: 5px;
+        i.pi {
+          cursor: pointer;
+          margin: 5px;
+        }
+      }
+    }
+
+    .chapter-editor {
+      margin-left: 80px;
+      margin-bottom: 20px;
+      .p-card-body {
+        padding: 16px;
+      }
+
+      .p-card-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0;
+
+        .edit-chapter {
+          .lecture-number {
+            margin: 0 5px;
+          }
+
+          .lecture-title {
+            margin: 0 5px;
+          }
+
+          .lecture-action {
+            margin-left: 5px;
+            i.pi {
+              cursor: pointer;
+              margin: 5px;
+            }
+          }
+        }
+
+        .add-content {
+          button {
+            background-color: hsl(0, 0%, 100%);
+            border-color: hsl(191, 100%, 28%);
+            border-radius: 2px;
+            border-style: solid;
+            border-width: 1px;
+            color: hsl(191, 100%, 28%);
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 700;
+            gap: normal;
+            line-height: 20.2702px;
+            margin: 0px 10px 0px 0px;
+            padding: 6px 10px;
+            text-align: center;
+          }
+        }
+
+        .lecture-desc {
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+    .add-lecture {
+      margin-top: 20px;
+      button {
+        background-color: hsl(0, 0%, 100%);
+        border-color: hsl(191, 100%, 28%);
+        border-radius: 2px;
+        border-style: solid;
+        border-width: 1px;
+        color: hsl(191, 100%, 28%);
+        display: inline-block;
+        font-size: 15px;
+        font-weight: 700;
+        gap: normal;
+        line-height: 20.2702px;
+        margin: 0px 10px 0px 0px;
+        padding: 6px 10px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .panel {
+  width: 100%;
+}

@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <ng-container *ngIf="post$ | async as post; else loadPost">
+    <app-path-category
+      [idCategory]="idParent"
+      [postTitle]="post.title"
+    ></app-path-category>
+
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="border-1 p-3">
+          <h3 class="mb-4">{{ post.title }}</h3>
+          <div [innerHTML]="post.html | safeHtml"></div>
+        </div>
+        <app-comment></app-comment>
+      </div>
+      <div class="col-lg-3">
+        <app-review [relate$]="relatePost$">
+          {{ "danh sách bài viết" | uppercase }}
+        </app-review>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loadPost>
+    <app-loading-placeholder
+      style="position: relative; height: 500px"
+    ></app-loading-placeholder>
+  </ng-template>
+</div>

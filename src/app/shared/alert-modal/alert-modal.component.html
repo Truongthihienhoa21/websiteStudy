@@ -1,0 +1,29 @@
+<div class="modal fade" [class.show]="showModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <ng-content select="h5"></ng-content>
+      </div>
+      <div class="modal-body">
+        <ng-content select=".body" #body></ng-content>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary mr-3"
+          (click)="onClose(false)"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onClose(true)">
+          Ok
+        </button>
+      </div>
+
+      <div class="loading" *ngIf="alertLoading">
+        <span class="loader"></span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  .card {
+    min-height: 760px;
+  }
+
+  .table {
+    td {
+      vertical-align: middle;
+    }
+  }
+
+  .w-30 {
+    width: 30%;
+  }
+
+  .fas.fa-edit {
+    color: #3699ff;
+  }
+
+  .fas.fa-trash {
+    color: #f64e60;
+  }
+}

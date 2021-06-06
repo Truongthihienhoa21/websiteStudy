@@ -1,0 +1,29 @@
+<h2 class="title col-lg-12">COUPON GIẢM GIÁ</h2>
+
+<ng-container *ngIf="posts$ | async as posts; else loadPost">
+  <p-carousel
+    [value]="posts"
+    styleClass="custom-carousel"
+    [numVisible]="2"
+    [numScroll]="1"
+    [autoplayInterval]="3000"
+    [circular]="true"
+  >
+    <ng-template let-post pTemplate="item">
+      <div class="post-item">
+        <div class="post-item-content">
+          <div class="img">
+            <img [src]="post.img" />
+          </div>
+          <div>
+            <h5 class="p-mt-3">{{ post.title }}</h5>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</ng-container>
+
+<ng-template #loadPost>
+  <app-loading-placeholder style="position: relative"></app-loading-placeholder>
+</ng-template>

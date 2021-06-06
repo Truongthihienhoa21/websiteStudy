@@ -1,0 +1,46 @@
+<ul class="list-group">
+  <li class="list-group-item title">
+    <ng-content #title></ng-content>
+  </li>
+
+  <ng-container *ngIf="title !== 'review'">
+    <ng-container *ngIf="relate$ | async as lessons">
+      <ul class="list-group" *ngFor="let lesson of lessons">
+        <li class="list-group-item active" *ngIf="lesson | getKeyObj">
+          {{ lesson | getKeyObj }}
+        </li>
+        <li
+          class="list-group-item"
+          [class.current]="(currentPost$ | async) === item._id"
+          *ngFor="let item of lesson | getValueObj"
+        >
+          <a (click)="onClick(item)"> {{ item.title }}</a>
+        </li>
+      </ul>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="title === 'review'">
+    <ng-container *ngIf="relate$ | async as reviews">
+      <div
+        class="card mb-3 cursor-pointer"
+        *ngFor="let review of reviews"
+        (click)="onClick(review)"
+      >
+        <img [src]="review['img']" class="card-img-top" style="height: 150px" />
+        <div class="card-body">
+          <p class="card-title">
+            <span class="mr-1">{{ review.title }}</span>
+
+            <i class="fas fa-comment-alt"></i>
+            <span class="text-primary ml-1"> {{ review["count"] }}</span>
+          </p>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="title === 'Mã giảm giá'">
+    <h1>mã giảm giá</h1>
+  </ng-container>
+</ul>

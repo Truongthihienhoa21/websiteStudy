@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-header">
+    <p class="mb-3">
+      <strong>ĐĂNG BÌNH LUẬN:</strong> Thông tin của bạn sẽ được giữ bí mật.
+    </p>
+    <p>
+      <strong>Lưu ý::</strong> Sử dụng Code để đăng code, và bình luận của bạn
+      sẽ được kiểm duyệt cẩn thận.
+    </p>
+  </div>
+
+  <app-comment-form (commentSubmit)="onSubmit($event)"></app-comment-form>
+</div>
+<div class="comment-view mt-4">
+  <p *ngIf="totalComment$ | async as total">
+    <strong>Ý kiến ({{ total }})</strong>
+  </p>
+
+  <div class="filter-comment">
+    <a
+      [class]="{ active: activeComment }"
+      (click)="filterComment('commentsHot')"
+      >Quan tâm nhất</a
+    >
+    <a
+      [class]="{ active: !activeComment }"
+      (click)="filterComment('commentsNew')"
+      >Mới nhất</a
+    >
+  </div>
+
+  <app-comment-detail
+    [commentList$]="commentList$"
+    [sort]="sort"
+  ></app-comment-detail>
+
+  <app-swal-alert></app-swal-alert>
+
+  <ng-container *ngIf="commentList$ | async as comments">
+    <button
+      class="btn btn-primary btn-block mt-4"
+      (click)="loadMoreComment()"
+      *ngIf="comments.length < (totalComment$ | async)"
+    >
+      Xem thêm
+    </button>
+  </ng-container>
+</div>

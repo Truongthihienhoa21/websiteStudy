@@ -1,0 +1,254 @@
+<div class="container">
+  <div class="p-grid" *ngIf="course; else loadCourse">
+    <div class="p-col-8">
+      <div class="course-header">
+        <h1>{{ course.title }}</h1>
+        <p>{{ course.subtitle }}</p>
+        <div class="rating">
+          <span class="header-rating">{{ course.rating }}</span>
+          <p-rating
+            [(ngModel)]="course.rating"
+            readonly="true"
+            [cancel]="false"
+          ></p-rating>
+          <span class="p-mx-1">(3,943 đánh giá)</span>
+          <span>{{ course.student || 0 }} học viên</span>
+        </div>
+        <div class="author">
+          Giảng viên: <span>{{ course.author || "jane" }}</span>
+        </div>
+        <div class="course-meta">
+          <span>Cập nhật lần cuối: {{ course._kmd.lmt | date }}</span>
+        </div>
+      </div>
+
+      <div class="course-body">
+        <div class="course-objective">
+          <h2 class="title">Bạn sẽ học được gì</h2>
+          <div class="p-grid">
+            <div
+              class="course-objective__content p-col-6"
+              *ngFor="let item of course.goal"
+            >
+              <i class="pi pi-check"></i>
+              <p>{{ item.content }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-content" *ngIf="course.section[0].title">
+          <h2 class="title">Nội dung khóa học</h2>
+          <div class="curriculum">
+            <div class="content">
+              <!-- <span class="section">21 sections</span>
+              <span class="lecture">314 lectures</span>
+              <span class="length">68h total length</span> -->
+            </div>
+            <span class="expand" (click)="expandAll(accor)"
+              >Hiển thị toàn bộ nội dung</span
+            >
+          </div>
+
+          <p-accordion [multiple]="true" #accor>
+            <ng-container *ngFor="let item of course.section">
+              <p-accordionTab [header]="item.title">
+                <div class="lecture" *ngFor="let lecture of item.chapter">
+                  <div class="title">
+                    <i class="fas fa-play-circle"></i>
+                    <p>{{ lecture.title }}</p>
+                  </div>
+                  <!-- <span>00:44</span> -->
+                </div>
+              </p-accordionTab>
+            </ng-container>
+          </p-accordion>
+        </div>
+
+        <div class="course-requirement">
+          <h2 class="title">Yêu cầu học viên</h2>
+          <ul style="padding-left: 20px">
+            <li *ngFor="let require of course.require">
+              {{ require.content }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="course-description">
+          <h2 class="title">Giới thiệu khóa học</h2>
+          <div
+            [innerHtml]="course.html"
+            [ngClass]="[showmore ? 'showmore' : 'showless']"
+          ></div>
+          <p-button
+            class="morelessBtn"
+            [label]="[showmore ? 'Show less' : 'Show more']"
+            [icon]="[showmore ? 'pi pi-angle-down' : 'pi pi-angle-up']"
+            iconPos="right"
+            (click)="showmore = !showmore"
+          ></p-button>
+        </div>
+
+        <div class="target-student">
+          <h2 class="title">Học viên phù hợp:</h2>
+          <ul style="padding-left: 20px">
+            <li *ngFor="let item of course.target_student">
+              {{ item.content }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-col-4">
+      <div class="card-sidebar">
+        <div class="sidebar-intro" (click)="showDialog()">
+          <div class="content">
+            <img [src]="course.img" />
+            <div class="overlay"></div>
+            <div class="icon">
+              <span>
+                <i class="pi pi-play" style="font-size: 2rem"></i>
+              </span>
+              <p>Xem trước</p>
+            </div>
+          </div>
+        </div>
+        <div [class]="{ 'overlay-modal': displayBasic }"></div>
+        <p-dialog
+          header="Course Preview"
+          [(visible)]="displayBasic"
+          [style]="{ width: '50vw' }"
+          [baseZIndex]="100000"
+          styleClass="modal-preview"
+        >
+          <p class="title">
+            {{ course.title }}
+          </p>
+
+          <iframe
+            [src]="course.preview_video | safeUrl"
+            width="640"
+            height="480"
+          ></iframe>
+
+          <!-- <div class="sample-video">
+            <p>Video mẫu:</p>
+          </div> -->
+
+          <ng-template pTemplate="footer">
+            <p-button
+              (click)="closeDialog()"
+              label="No"
+              styleClass="p-button-text"
+            ></p-button>
+            <p-button
+              (click)="closeDialog()"
+              label="Yes"
+              styleClass="p-button-text"
+            ></p-button>
+          </ng-template>
+        </p-dialog>
+
+        <div class="sidebar-content">
+          <div class="section-buy">
+            <div class="price">
+              <span class="current-price">{{
+                course.price | currency: "VND"
+              }}</span>
+              <!-- <s><span class="original-price">$129.99</span></s>
+              <span class="discount">91% off</span> -->
+            </div>
+            <!-- <div class="discount-expire">
+              <i class="pi pi-clock"></i>
+              <span>1 day left at this price!</span>
+            </div> -->
+            <button class="btn btn-add" (click)="addToCart(course)">
+              {{ course.incart ? "Đi đến giỏ hàng" : "Thêm vào giỏ hàng" }}
+            </button>
+            <button class="btn btn-buy" routerLink="/category/checkout">
+              Mua ngay
+            </button>
+            <p class="money-back">Hoàn tiền trong 30 ngày nếu không hài lòng</p>
+          </div>
+
+          <!-- <div class="section-description">
+            <h2>This course includes:</h2>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-grid" *ngIf="relatedCourses">
+    <div class="p-col-8 related-course">
+      <h2 class="title">Khóa học liên quan :</h2>
+      <a
+        class="course-related-container p-grid p-m-0"
+        *ngFor="let item of relatedCourses"
+        [routerLink]="['/category/courses', item._id]"
+      >
+        <div class="img p-col-2">
+          <img [src]="item.img" alt="" />
+        </div>
+        <div class="main-content p-col-7">
+          <p>{{ item.title }}</p>
+        </div>
+        <div class="sub-content p-col-3">
+          <div class="rating">
+            <span>{{ item.rating || 0 }}</span>
+            <i class="pi pi-star"></i>
+          </div>
+          <div class="student">
+            <i class="fas fa-user-friends"></i>
+            <span>{{ item.student || 0 }}</span>
+          </div>
+          <span class="price">{{ item.price | currency: "VND" }}</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <ng-template #loadCourse>
+    <div style="display: flex; justify-content: center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-template>
+</div>
+
+<div [class]="{ 'overlay-modal': displayDialog }"></div>
+
+<p-dialog
+  [(visible)]="displayDialog"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="1000000"
+>
+  <ng-template pTemplate="header"> Đăng nhập tài khoản của bạn </ng-template>
+  <p-divider></p-divider>
+  <form [formGroup]="userForm" (submit)="onLogin()">
+    <p class="p-mb-2">Bản phải đăng nhập trước</p>
+    <app-input
+      [control]="userForm.get('username')"
+      label="Tên tài khoản"
+    ></app-input>
+    <app-input
+      [control]="userForm.get('password')"
+      label="Mật khẩu"
+      type="password"
+    ></app-input>
+
+    <button
+      type="submit"
+      pButton
+      label="Đăng nhập"
+      [disabled]="userForm.invalid"
+    ></button>
+  </form>
+  <p-divider></p-divider>
+  <p-footer>
+    <p>
+      Bạn chưa có tài khoản? <span routerLink="/register">Đăng ký ngay</span>
+    </p>
+  </p-footer>
+</p-dialog>
+
+<p-toast [baseZIndex]="1000000000000000"></p-toast>
