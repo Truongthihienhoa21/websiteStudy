@@ -184,7 +184,7 @@
 }
 
 :host ::ng-deep .p-dialog-title {
-  color: hsl(207, 14%, 84%);
+  color: #000;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.2px;
@@ -195,7 +195,7 @@
 
 :host ::ng-deep .p-dialog-content {
   .title {
-    color: hsl(0, 0%, 100%);
+    color: #000;
     font-size: 19px;
     font-weight: 700;
     letter-spacing: -0.2px;
@@ -214,7 +214,9 @@
   background-color: rgb(249, 251, 255);
   margin: 0px;
 }
-
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title{
+  color: #000;
+}
 iframe {
   border: unset;
 }
