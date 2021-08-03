@@ -43,7 +43,7 @@ export class AuthService {
     user: 1,
   };
 
-  private userUrl = 'https://baas.kinvey.com/user/kid_ryf8NPqt_';
+  private userUrl = 'https://baas.kinvey.com/user/kid_By_1hT8kY';
 
   userInfo: BehaviorSubject<any> = new BehaviorSubject(null);
   userDetail$: Observable<any>;

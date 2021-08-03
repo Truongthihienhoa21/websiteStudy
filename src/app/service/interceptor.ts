@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
-  kinveyAppKey = 'kid_ryf8NPqt_';
-  kinveyAppSecret = '202b8dd4347b4946b1d684e746fbff76';
+  kinveyAppKey = 'kid_By_1hT8kY';
+  kinveyAppSecret = 'dd171880e8fd4bf495067534b7883bbe';
   keyMaster =
-    'Basic a2lkX3J5ZjhOUHF0XzoxMDM4ZTdlZjY1YjM0M2ZkYTdlNmJkMWNhZmUzNjBiNw==';
+    'Basic a2lkX0J5XzFoVDhrWTpiMTdhNTdlODdjNzY0MDZhYTJkM2JiYjI1NzkyY2Y2Mw==';
 
   keyRegister = 'Basic ' + btoa(this.kinveyAppKey + ':' + this.kinveyAppSecret);
   constructor() {}

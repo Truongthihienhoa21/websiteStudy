@@ -29,7 +29,8 @@ export class CollectionService<T> {
   constructor(intialState: T, collectionName: string, public http: HttpClient) {
     this.subject = new BehaviorSubject(intialState);
     this.state$ = this.subject.asObservable();
-    this.url = `https://baas.kinvey.com/appdata/kid_ryf8NPqt_/${collectionName}`;
+    
+    this.url = `https://baas.kinvey.com/appdata/kid_By_1hT8kY/${collectionName}`;
   }
 
   get valueState() {

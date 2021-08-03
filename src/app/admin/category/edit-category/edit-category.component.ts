@@ -6,7 +6,6 @@ import { combineLatest, from, Observable, of } from 'rxjs';
 import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { Category } from 'src/app/model/model';
 import { CategoryService } from 'src/app/service/category.service';
-import { DataStoreComponent } from 'src/app/service/test.service';
 import { SearchInputComponent } from 'src/app/shared/search-input/search-input.component';
 
 @Component({
