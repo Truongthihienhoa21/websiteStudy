@@ -34,8 +34,8 @@ export class AuthService {
   ];
   listRoles = {
     'f864900b-f61a-427a-8984-b9a6181fc814': 'admin',
-    '804d167b-9f1e-4e4f-b92e-1a7c5d32f4c3': 'user',
-    '71df7182-248e-471b-9d72-37bae5c55be0': 'supporter',
+    '65668d68-825f-41e5-b531-55de8ebb76d9': 'user',
+    '4bdf91ed-7ace-4615-9639-d1a632e00d3e': 'supporter',
   };
 
   priority = {
