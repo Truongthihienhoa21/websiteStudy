@@ -30,6 +30,7 @@ export class AuthService {
   private roleIdAdmin = [
     'f864900b-f61a-427a-8984-b9a6181fc814',
     '71df7182-248e-471b-9d72-37bae5c55be0',
+    '23339ab0-df69-433f-9ab1-92515fc5e132'
   ];
   listRoles = {
     'f864900b-f61a-427a-8984-b9a6181fc814': 'admin',
