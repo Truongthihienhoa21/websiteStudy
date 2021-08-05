@@ -15,18 +15,15 @@ export class HomeComponent implements OnInit {
   reviews$: Observable<Post[]>;
   homeFields = [
     { field: '', order: 1 },
-    { field: 'WordPress', order: 2 },
-    { field: 'Webmaster', order: 3 },
-    { field: 'Tin học', order: 4 },
-    { field: 'Thủ thuật', order: 5 },
-    { field: 'Môn học', order: 6 },
-    { field: 'Mã giảm giá', order: 7 },
+    { field: 'Tin học', order: 2 },
+    { field: 'Thủ thuật', order: 3 },
+    { field: 'Môn học', order: 4 },
   ];
 
   constructor(
     private lessonService: LessonService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const canLoadPost$ = this.authService
