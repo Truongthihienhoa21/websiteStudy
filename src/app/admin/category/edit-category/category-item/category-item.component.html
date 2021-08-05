@@ -42,8 +42,10 @@
   </div>
 </ng-template>
 
-<app-edit-modal
-  [(showModal)]="showModal"
-  [categoryEdit]="itemEdit"
-  (categoryEditChange)="editSuccess($event)"
-></app-edit-modal>
+<ng-container>
+  <app-edit-modal
+    [(showModal)]="showModal"
+    [categoryEdit]="itemEdit"
+    (categoryEditChange)="editSuccess($event)"
+  ></app-edit-modal>
+</ng-container>

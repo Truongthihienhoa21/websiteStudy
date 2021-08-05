@@ -7,7 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AsyncValidator } from '@angular/forms';
 import { combineLatest, Observable, of, Subscription } from 'rxjs';
 import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import { Category } from 'src/app/model/model';
@@ -27,7 +27,7 @@ export class ModalEditComponent implements OnInit, OnChanges, OnDestroy {
   @Input() categoryEdit: Category;
   @Output() categoryEditChange = new EventEmitter<Category>();
   initialValue: Observable<unknown>;
-  isEdit: Observable<boolean>;
+  isEdit: boolean;
   formEdit: FormGroup;
   sub: Subscription;
   constructor(
@@ -54,30 +54,46 @@ export class ModalEditComponent implements OnInit, OnChanges, OnDestroy {
         ...this.categoryEdit,
       });
 
-      this.initialValue = of(this.formEdit.value);
+      this.initialValue = this.formEdit.value;
       const valueChanges = this.formEdit.valueChanges;
 
-      this.isEdit = combineLatest([this.initialValue, valueChanges]).pipe(
-        map(([initialValue, valueChanges]) => {
-          if (JSON.stringify(initialValue) !== JSON.stringify(valueChanges)) {
-            return true;
-          } else {
-            return false;
-          }
-        }),
-        distinctUntilChanged(),
-        shareReplay()
-      );
+      // this.isEdit = combineLatest([this.initialValue, valueChanges]).pipe(
+      //   map(([initialValue, valueChanges]) => {
+      //     console.log(111);
+
+      //     if (JSON.stringify(initialValue) !== JSON.stringify(valueChanges)) {
+      //       return true;
+      //     } else {
+      //       return false;
+      //     }
+      //   }),
+      //   distinctUntilChanged(),
+      //   shareReplay()
+      // );
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.formEdit.valueChanges.subscribe(val => {
+      console.log(val);
+      console.log(this.initialValue);
+
+      if (JSON.stringify(this.initialValue) !== JSON.stringify(val)) {
+        this.isEdit = true;
+      } else {
+        this.isEdit = false;
+      }
+    })
+  }
 
   onClose() {
     this.showModalChange.emit(!this.showModal);
   }
 
   onSubmit() {
+    console.log(this.formEdit.valid);
+
     const { value } = this.formEdit;
 
     this.categoryEdit = {
