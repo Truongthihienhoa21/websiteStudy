@@ -9,6 +9,11 @@
   }
 }
 
+.img{
+  height: 100%;
+  width: 30%;
+}
+
 .total-cart {
   margin-bottom: 0.5rem;
 }
@@ -86,4 +91,8 @@ button {
   margin-bottom: 30px;
   padding: 10px;
   text-align: center;
+}
+
+:host ::ng-deep .p-card {
+  height: 100%;
 }

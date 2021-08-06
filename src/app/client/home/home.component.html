@@ -4,14 +4,9 @@
       <div class="home-title">
         <h1 class="title">Học lập trình online miễn phí</h1>
         <p class="my-3">
-          Freetuts là trang web học lập trình online miễn phí với các chủ đề:
+          ELearning là trang web học lập trình online miễn phí với các chủ đề:
           lập trình / các môn học / công nghệ / review sản phẩm tốt nhất đến với
           độc giả.
-        </p>
-
-        <p class="p-box my-4">
-          Tham gia nhóm hỗ trợ cài đặt website WordPress miễn phí
-          <a>tại đây.</a>
         </p>
       </div>
 
@@ -27,9 +22,12 @@
       </ng-container>
     </div>
     <div class="col-lg-3">
-      <app-review [relate$]="reviews$" title="review">{{
-        "Xem nhiều" | uppercase
-      }}</app-review>
+      <app-review
+        *ngIf="reviews$ | async"
+        [relate$]="reviews$"
+        title="review"
+        >{{ "Xem nhiều" | uppercase }}</app-review
+      >
     </div>
   </div>
 </div>

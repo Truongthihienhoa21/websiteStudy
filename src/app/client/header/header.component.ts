@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (JSON.parse(localStorage.getItem('logged'))) {
+    if (JSON.parse(localStorage.getItem('userInfo'))) {
       this.authService.isLoginClient$.next(true);
     }
     this.isLogin = this.authService.isLoginClient$.asObservable();
@@ -69,7 +69,6 @@ export class HeaderComponent implements OnInit {
 
     this.authService.logout();
     this.router.navigateByUrl('/');
-    localStorage.setItem('logged', 'false');
     this.previousRouteService.setPrevRoute(null);
   }
 }
