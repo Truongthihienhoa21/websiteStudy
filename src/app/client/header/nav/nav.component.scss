@@ -41,6 +41,7 @@ ul > li > a {
   justify-content: center;
   align-items: center;
   height: 100%;
+  cursor: pointer;
 }
 
 .dropdown-page,
@@ -59,6 +60,7 @@ ul > li > a {
   font-size: 1.1rem;
   font-weight: 400;
   color: #fff;
+  cursor: pointer;
 }
 
 .dropdown:hover {
