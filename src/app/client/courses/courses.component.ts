@@ -34,7 +34,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private messageService: FalconMessageService,
     private loadingProgress: LoadingProgressService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userForm = this.initForm();

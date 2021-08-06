@@ -4,7 +4,7 @@
       <div class="checkout-info">
         <h2 class="title">Thanh toán</h2>
 
-        <div class="checkout-address">
+        <!-- <div class="checkout-address">
           <h3>Địa chỉ:</h3>
           <p-dropdown
             [options]="filteredCountries"
@@ -14,10 +14,10 @@
             [filter]="true"
             filterBy="name"
           ></p-dropdown>
-        </div>
+        </div> -->
 
         <div class="checkout-billing-options">
-          <div class="options-method">
+          <!-- <div class="options-method">
             <div class="p-field-radiobutton">
               <p-radioButton
                 name="groupname"
@@ -44,7 +44,7 @@
                   style="margin-left: 20px"
               /></label>
             </div>
-          </div>
+          </div> -->
 
           <div class="payment-method-info">
             <div class="for-card" *ngIf="paymentMethod === 'card'; else paypal">

@@ -105,7 +105,7 @@ export class CoursesDetailComponent implements OnInit, OnDestroy {
   addToCart(course) {
     // console.log(course);
 
-    if (!this.currentUserId && localStorage.getItem('logged') !== 'true') {
+    if (!this.currentUserId && localStorage.getItem('userInfo')) {
       this.displayDialog = true;
     } else {
       if (course.incart) {
