@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 export class EditPostComponent implements OnInit, OnDestroy {
   posts$: Observable<Partial<Post>[]>;
   numPage$: Observable<number>;
-  skipPage = 1;
+  skipPage = 0;
   postDelete: Post;
   currentSearch: string;
   sub: Subscription;
@@ -45,7 +45,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
           .pipe(finalize(() => this.loading.hideLoading()))
           .subscribe(
             (val) => {
-              this.lessonService.deletePost(post);
+              // this.lessonService.deletePost(post);
+              this.getPosts()
 
               const numpage = Math.ceil(
                 this.lessonService.valueState.postsEdit.length / 10
@@ -84,23 +85,26 @@ export class EditPostComponent implements OnInit, OnDestroy {
   getPosts(key?: string) {
     const query = {
       limit: 10,
-      skip: 10 * (this.skipPage - 1),
+      skip: 10 * (this.skipPage),
       fields: 'title',
       sort: '{"_kmd.lmt":-1}',
     };
-
+    let params = new HttpParams()
+    .set('sort', '{"_kmd.lmt":-1}')
+    .set('limit', '10')
+    .set('skip', (10 * (this.skipPage - 1)).toString())
+    .set('fields', 'title')
     if (key) {
-      let params = new HttpParams()
-        .set('sort', '{"_kmd.lmt":-1}')
-        .set('limit', '10')
-        .set('skip', (10 * (this.skipPage - 1)).toString())
-        .set('fields', 'title')
-        .set('query', JSON.stringify({ title: { $regex: `^${key}` } }));
+       params = params.set('query', JSON.stringify({ title: { $regex: `^${key}` } }));
 
       this.posts$ = this.lessonService.find(params);
     } else {
-      this.posts$ = this.lessonService.getPostsEdit(query);
+      this.posts$ = this.lessonService.find(params);
     }
+
+    // this.categorys$ = this.categoryService.find<Category>(params);
+    // this.posts$ = this.lessonService.find(params);
+
   }
 
   getPaginationPage(key?: string) {
@@ -113,8 +117,9 @@ export class EditPostComponent implements OnInit, OnDestroy {
     this.currentSearch = key;
   }
 
-  changePosts(pageClick: number) {
-    this.skipPage = pageClick;
+  changePosts(event: any) {
+    
+    this.skipPage = event.page;
     this.getPosts(this.currentSearch);
   }
 

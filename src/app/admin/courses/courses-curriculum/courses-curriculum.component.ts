@@ -17,6 +17,7 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
   formCurriculum: FormGroup;
   idcourse: string;
   unsubscription = new Subject();
+  dataCourse: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -30,7 +31,7 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
     this.formCurriculum = this.initForm();
     this.route.params
       .pipe(
-        tap(this.loadingService.showLoading),
+        // tap(val => this.loadingService.showLoading()),
         switchMap(({ id }) => {
           if (id) {
             this.idcourse = id;
@@ -39,12 +40,15 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
             return of(null);
           }
         }),
-        finalize(this.loadingService.hideLoading),
+        // tap(() => this.loadingService.hideLoading()),
         takeUntil(this.unsubscription)
       )
       .subscribe((val: any) => {
+        console.log(val);
+        
         // this.loading = false;
         if (val) {
+          this.dataCourse = val;
           const form = this.formCurriculum.get('section') as FormArray;
           form.clear();
 
@@ -108,7 +112,13 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // console.log(this.formCurriculum.value);
+    console.log(this.formCurriculum.value, this.dataCourse);
+    const dataToSave = {...this.dataCourse, ...this.formCurriculum.value};
+
+    this.coursesService.update(dataToSave, this.idcourse).pipe(takeUntil(this.unsubscription)).subscribe(val => {
+      console.log(val);
+      
+    })
   }
 
   prevPage() {

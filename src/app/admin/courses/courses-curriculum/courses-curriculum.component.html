@@ -1,6 +1,6 @@
 <div class="p-field p-col-10">
   <p-card header="Nội dung khóa học">
-    <form [formGroup]="formCurriculum" (submit)="onSubmit()">
+    <form [formGroup]="formCurriculum" >
       <app-curriculum-item
         [parentForm]="formCurriculum"
         (addLecture)="addLecture($event)"
@@ -8,7 +8,7 @@
 
       <div class="add-content p-col-12 p-px-0 p-d-flex p-jc-between">
         <button pButton (click)="addSection()" label="Thêm chương học"></button>
-        <button pButton label="Lưu"></button>
+        <button pButton label="Lưu" (click)="onSubmit()"></button>
       </div>
     </form>
 
