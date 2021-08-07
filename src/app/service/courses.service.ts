@@ -14,6 +14,7 @@ const initalCoursesState = {};
 export class CoursesService extends CollectionService<any> {
   newCourse: BehaviorSubject<any>;
   courseInCart: BehaviorSubject<any[]>;
+  editCourse: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(
     http: HttpClient,
     private authService: AuthService,
@@ -24,11 +25,15 @@ export class CoursesService extends CollectionService<any> {
 
     this.getCoursesLocal();
 
-    this.route.params.subscribe();
+  
   }
 
   get newCourseData() {
     return this.newCourse.value;
+  }
+
+  get editCourseData() {
+    return this.editCourse.value;
   }
 
   getCoursesLocal() {

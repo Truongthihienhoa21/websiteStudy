@@ -5,7 +5,7 @@
       bạn
     </p>
 
-    <form [formGroup]="targetForm" (ngSubmit)="onSave()">
+    <form [formGroup]="targetForm">
       <app-courses-form-target
         [parentForm]="targetForm"
         field="goal"
@@ -27,7 +27,7 @@
         [placeholder]="placeholder_target_student"
       ></app-courses-form-target>
 
-      <p-button label="Lưu" icon="pi pi-check" type="submit"></p-button>
+      <p-button label="Lưu" icon="pi pi-check" (onClick)="onSave()"></p-button>
     </form>
 
     <ng-template pTemplate="footer">
