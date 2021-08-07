@@ -22,17 +22,19 @@ export class EditCategoryComponent implements OnInit {
   search: SearchInputComponent;
 
   constructor(private categoryService: CategoryService) {
-    this.getCategory();
-    this.getPaginationPage();
+    
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getCategory();
+    this.getPaginationPage();
+   }
 
   getCategory(key?: string) {
     let params = new HttpParams()
       .set('sort', '{"_kmd.lmt":-1}')
       .set('limit', '10')
-      .set('skip', (10 * (this.skipPage - 1)).toString());
+      .set('skip', (10 * (this.skipPage)).toString());
 
     if (key) {
       params = params.set(
@@ -49,6 +51,8 @@ export class EditCategoryComponent implements OnInit {
   }
 
   changeCategory(event) {
+  
+    
     this.skipPage = event.page;
     this.getCategory(this.currentSearch);
   }
@@ -61,7 +65,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   deleted() {
-    this.skipPage = 0;
+    // this.skipPage = 0;
     this.getCategory();
     this.getPaginationPage(this.currentSearch);
     this.search.inputEle.nativeElement.value = '';

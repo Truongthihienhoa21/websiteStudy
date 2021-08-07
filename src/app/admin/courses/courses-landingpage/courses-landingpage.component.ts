@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { of, Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { LoadingProgressService } from 'src/app/loading-progress/loading-progress.service';
 import { CoursesService } from 'src/app/service/courses.service';
 import { FalconMessageService } from 'src/app/service/falcon-message.service';
 
@@ -26,8 +27,9 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private coursesService: CoursesService,
-    private messageService: FalconMessageService
-  ) { }
+    private messageService: FalconMessageService,
+    private loadingService: LoadingProgressService
+  ) {}
 
   ngOnInit(): void {
     this.formLandingPage = this.initForm();
@@ -38,7 +40,10 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
         switchMap(({ id }) => {
           if (id) {
             this.idcourse = id;
-            return this.coursesService.findById(id);
+            if (!this.coursesService.editCourseData) {
+              return this.coursesService.findById(id);
+            }
+            return of(this.coursesService.editCourseData);
           } else {
             return of(null);
           }
@@ -48,7 +53,12 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
       .subscribe((val: any) => {
         this.loading = false;
         if (val) {
+          console.log(val);
+
           this.formLandingPage.patchValue({ ...val });
+          if (!this.coursesService.editCourseData) {
+            this.coursesService.editCourse.next(val);
+          }
         }
       });
 
@@ -91,12 +101,38 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit() {
+  onSave() {
     const valid = this.checkForm();
     if (!valid) {
       return;
     }
-    const value = this.formLandingPage.value;
+
+    if (this.idcourse) {
+      this.loadingService.showLoading();
+      const dataToSave = {
+        ...this.coursesService.editCourseData,
+        ...this.formLandingPage.value,
+      };
+
+      this.coursesService
+        .update(dataToSave, this.idcourse)
+        .pipe(takeUntil(this.unsubscription))
+        .subscribe(
+          (val) => {
+            console.log(val);
+            this.loadingService.hideLoading();
+            this.messageService.showSuccess(
+              'Thành công',
+              'Khóa học đã được cập nhật'
+            );
+            this.coursesService.editCourse.next(val);
+          },
+          (err) => {
+            this.loadingService.hideLoading();
+            this.messageService.showError('Thất bại', 'Đã có lỗi xảy ra');
+          }
+        );
+    }
   }
 
   nextPage() {
@@ -107,16 +143,18 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
       return;
     }
     // console.log(123);
-
     const landingPageData = this.formLandingPage.value;
-    this.coursesService.newCourse.next({
-      ...this.coursesService.newCourseData,
-      ...landingPageData,
-    });
-
     if (this.idcourse) {
+      this.coursesService.editCourse.next({
+        ...this.coursesService.editCourseData,
+        ...landingPageData,
+      });
       this.router.navigate(['admin/courses/edit', this.idcourse, 'curriculum']);
     } else {
+      this.coursesService.newCourse.next({
+        ...this.coursesService.newCourseData,
+        ...landingPageData,
+      });
       this.router.navigate(['admin/courses/add/curriculum']);
     }
   }
@@ -125,7 +163,7 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
     let valid = true;
     if (this.formLandingPage.invalid) {
       valid = false;
-      this.messageService.showError('Error', 'Please input all fields');
+      this.messageService.showError('Lỗi', 'vui lòng nhập tất cả các trường');
     }
 
     return valid;
