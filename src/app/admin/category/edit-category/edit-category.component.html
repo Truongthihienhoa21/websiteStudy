@@ -6,6 +6,7 @@
       [categories]="categorys$ | async"
       [currentPage]="[skipPage]"
       (removed)="deleted()"
+
     ></app-category-item>
 
     <ng-container *ngIf="numPage$ | async as numPage">
@@ -13,7 +14,9 @@
         [rows]="10"
         [totalRecords]="numPage * 10"
         (onPageChange)="changeCategory($event)"
+      
       ></p-paginator>
     </ng-container>
+  
   </p-card>
 </div>

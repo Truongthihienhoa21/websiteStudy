@@ -17,6 +17,7 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
   formCurriculum: FormGroup;
   idcourse: string;
   unsubscription = new Subject();
+  dataCourse: any;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -24,27 +25,33 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private messageService: FalconMessageService,
     private loadingService: LoadingProgressService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.formCurriculum = this.initForm();
     this.route.params
       .pipe(
-        tap(this.loadingService.showLoading),
+        tap((val) => this.loadingService.showLoading()),
         switchMap(({ id }) => {
           if (id) {
             this.idcourse = id;
-            return this.coursesService.findById(id);
+
+            if (!this.coursesService.editCourseData) {
+              return this.coursesService.findById(id);
+            }
+            return of(this.coursesService.editCourseData);
           } else {
             return of(null);
           }
         }),
-        finalize(this.loadingService.hideLoading),
+
         takeUntil(this.unsubscription)
       )
       .subscribe((val: any) => {
-        // this.loading = false;
         if (val) {
+          console.log(val);
+
+          this.dataCourse = val;
           const form = this.formCurriculum.get('section') as FormArray;
           form.clear();
 
@@ -63,7 +70,11 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
           });
 
           this.formCurriculum.patchValue({ ...val });
-          // this.coursesService.newCourse.next(val);
+
+          if (!this.coursesService.editCourseData) {
+            this.coursesService.editCourse.next(val);
+          }
+          this.loadingService.hideLoading();
         }
       });
   }
@@ -108,7 +119,32 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // console.log(this.formCurriculum.value);
+    if (this.idcourse) {
+      this.loadingService.showLoading();
+      const dataToSave = {
+        ...this.coursesService.editCourseData,
+        ...this.formCurriculum.value,
+      };
+
+      this.coursesService
+        .update(dataToSave, this.idcourse)
+        .pipe(takeUntil(this.unsubscription))
+        .subscribe(
+          (val) => {
+            console.log(val);
+            this.loadingService.hideLoading();
+            this.messageService.showSuccess(
+              'Thành công',
+              'Khóa học đã được cập nhật'
+            );
+            this.coursesService.editCourse.next(val);
+          },
+          (err) => {
+            this.loadingService.hideLoading();
+            this.messageService.showError('Thất bại', 'Đã có lỗi xảy ra');
+          }
+        );
+    }
   }
 
   prevPage() {
@@ -125,14 +161,18 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
 
   nextPage() {
     const curriculumData = this.formCurriculum.value;
-    this.coursesService.newCourse.next({
-      ...this.coursesService.newCourseData,
-      ...curriculumData,
-    });
 
     if (this.idcourse) {
+      this.coursesService.editCourse.next({
+        ...this.coursesService.editCourseData,
+        ...curriculumData,
+      });
       this.router.navigate(['admin/courses/edit', this.idcourse, 'goals']);
     } else {
+      this.coursesService.newCourse.next({
+        ...this.coursesService.newCourseData,
+        ...curriculumData,
+      });
       this.router.navigate(['admin/courses/add/goals']);
     }
   }

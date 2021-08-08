@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Quản lý Post</h5>
@@ -57,4 +57,64 @@
     (pageClick)="changePosts($event)"
   >
   </app-pagination>
+</div> -->
+
+<div class="p-field p-col-12">
+  <p-card header=" Quản lý Post">
+    <app-search-input (query)="onSearch($event)"></app-search-input>
+
+    <ng-container *ngIf="posts$ | async as posts; else loadPost">
+      <p-table [value]="posts" [rowHover]="true" [rows]="10" #table>
+        <ng-template pTemplate="header">
+          <tr>
+       
+              <th scope="col " style="width: 10%;">#</th>
+              <th scope="col"style="width: 80%;" > Name</th>
+              <th scope="col" style="width: 10%;"></th>
+         
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-post let-i="rowIndex">
+          <tr>
+            <td>{{ 10 * skipPage + i + 1 }}</td>
+                <td>{{ post.title }}</td>
+                <td>
+                  <a
+                    class="btn btn-icon btn-light btn-hover-danger btn-sm mx-2"
+                    [routerLink]="['./', post._id]"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a
+                    class="btn btn-icon btn-light btn-hover-danger btn-sm mx-2"
+                    (click)="onDelete(post)"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-container>
+    
+    <ng-template #loadPost>
+      <div class="p-field p-col-12">
+        <p-skeleton styleClass="p-mb-4" height="1.5rem"></p-skeleton>
+        <p-skeleton styleClass="p-mb-4" height="1.5rem"></p-skeleton>
+        <p-skeleton styleClass="p-mb-4" height="1.5rem"></p-skeleton>
+        <p-skeleton styleClass="p-mb-4" height="1.5rem"></p-skeleton>
+        <p-skeleton styleClass="p-mb-4" height="1.5rem"></p-skeleton>
+      </div>
+    </ng-template>
+
+    <ng-container *ngIf="numPage$ | async as numPage">
+      <p-paginator
+        [rows]="10"
+        [totalRecords]="numPage * 10"
+        (onPageChange)="changePosts($event)"
+      
+      ></p-paginator>
+    </ng-container>
+  
+  </p-card>
 </div>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { of, Subject } from 'rxjs';
 import { finalize, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { LoadingProgressService } from 'src/app/loading-progress/loading-progress.service';
 import { CoursesService } from 'src/app/service/courses.service';
 import { FalconMessageService } from 'src/app/service/falcon-message.service';
 
@@ -29,13 +30,12 @@ export class GoalsCourseComponent implements OnInit, OnDestroy {
     private router: Router,
     private coursesService: CoursesService,
     private messageService: FalconMessageService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private loadingService: LoadingProgressService
+  ) {}
 
   ngOnInit(): void {
     this.targetForm = this.initForm();
-    // const valueCourse = this.coursesService.newCourseData;
-    // this.targetForm.patchValue({ ...valueCourse });
 
     this.route.params
       .pipe(
@@ -43,7 +43,10 @@ export class GoalsCourseComponent implements OnInit, OnDestroy {
         switchMap(({ id }) => {
           if (id) {
             this.idcourse = id;
-            return this.coursesService.findById(id);
+            if (!this.coursesService.editCourseData) {
+              return this.coursesService.findById(id);
+            }
+            return of(this.coursesService.editCourseData);
           } else {
             return of(null);
           }
@@ -74,6 +77,9 @@ export class GoalsCourseComponent implements OnInit, OnDestroy {
           });
 
           this.targetForm.patchValue({ ...val });
+          if (!this.coursesService.editCourseData) {
+            this.coursesService.editCourse.next(val);
+          }
         }
       });
   }
@@ -93,25 +99,65 @@ export class GoalsCourseComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const goalsData = this.targetForm.value;
-    this.coursesService.newCourse.next({
-      ...this.coursesService.newCourseData,
-      ...goalsData,
-    });
-    this.loading = true;
-    this.coursesService
-      .create(this.coursesService.newCourseData)
-      .pipe(takeUntil(this.unsubscription))
-      .subscribe((val) => {
-        this.loading = false;
-        this.messageService.showSuccess('Success', 'Course Added');
-        this.targetForm = this.initForm();
-        this.coursesService.newCourse.next(null);
-        this.router.navigate(['admin/courses/add/landing-page']);
+    if (!this.idcourse) {
+      this.coursesService.newCourse.next({
+        ...this.coursesService.newCourseData,
+        ...goalsData,
       });
+      this.loading = true;
+      this.coursesService
+        .create(this.coursesService.newCourseData)
+        .pipe(takeUntil(this.unsubscription))
+        .subscribe((val) => {
+          this.loading = false;
+          this.messageService.showSuccess('Thành công', 'Đã thêm khóa học');
+          this.targetForm = this.initForm();
+          this.coursesService.newCourse.next(null);
+          this.router.navigate(['admin/courses/add/landing-page']);
+        });
+    } else {
+      this.loading = true;
+      const dataToSave = {
+        ...this.coursesService.editCourseData,
+        ...this.targetForm.value,
+      };
+      this.coursesService
+        .update(dataToSave, this.idcourse)
+        .pipe(takeUntil(this.unsubscription))
+        .subscribe((val) => {
+          this.loading = false;
+          this.messageService.showSuccess('Thành công', 'Khóa học đã cập nhật');
+        });
+    }
   }
 
   onSave() {
-    // console.log(this.targetForm.value);
+    if (this.idcourse) {
+      this.loadingService.showLoading();
+      const dataToSave = {
+        ...this.coursesService.editCourseData,
+        ...this.targetForm.value,
+      };
+
+      this.coursesService
+        .update(dataToSave, this.idcourse)
+        .pipe(takeUntil(this.unsubscription))
+        .subscribe(
+          (val) => {
+            console.log(val);
+            this.loadingService.hideLoading();
+            this.messageService.showSuccess(
+              'Thành công',
+              'Khóa học đã được cập nhật'
+            );
+            this.coursesService.editCourse.next(val);
+          },
+          (err) => {
+            this.loadingService.hideLoading();
+            this.messageService.showError('Thất bại', 'Đã có lỗi xảy ra');
+          }
+        );
+    }
   }
 
   prevPage() {

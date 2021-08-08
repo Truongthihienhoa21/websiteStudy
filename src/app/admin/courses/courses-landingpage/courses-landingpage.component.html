@@ -1,7 +1,7 @@
 <div class="p-field p-col-12">
   <p-card>
     <div class="page" [formGroup]="formLandingPage">
-      <form [formGroup]="formLandingPage" (ngSubmit)="onSubmit()">
+      <form [formGroup]="formLandingPage">
         <div class="p-grid p-fluid p-m-0">
           <div class="p-col-12">
             <div class="p-inputgroup p-grid">
@@ -120,7 +120,11 @@
             </div>
           </div>
         </div>
-        <!-- <p-button label="Save" icon="pi pi-check" type="submit"></p-button> -->
+        <p-button
+          label="Lưu"
+          icon="pi pi-check"
+          (onClick)="onSave()"
+        ></p-button>
       </form>
     </div>
 
