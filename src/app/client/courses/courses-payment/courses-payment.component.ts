@@ -54,6 +54,14 @@ export class CoursesPaymentComponent implements OnInit, OnDestroy {
           (value, item) => value + parseFloat(item.price),
           0
         );
+
+
+        this.discountPrice = courses.reduce(
+          (value, item) => value + parseFloat(item.discount ? item.discount : 0),
+          0
+        );
+
+        console.log(courses, this.discountPrice)
         this.totalPrice = this.originalPrice - this.discountPrice;
       });
 

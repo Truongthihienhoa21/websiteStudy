@@ -16,9 +16,9 @@ export class AssignmentItemComponent implements OnInit {
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: FalconMessageService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   get formLists() {
     return this.parentForm.get('lists_assignment') as FormArray;
@@ -58,8 +58,8 @@ export class AssignmentItemComponent implements OnInit {
   onDeleteSection(index) {
     this.confirmationService.confirm({
       message:
-        'You are about to remove a curriculum item. Are you sure you want to continue?',
-      header: 'Please confirm',
+        'Bạn có muốn có bài tập này không?',
+      header: 'Xác nhận',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.messageService.showInfo('Confirmed', 'Section deleted');

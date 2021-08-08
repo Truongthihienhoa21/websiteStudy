@@ -48,7 +48,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private coursesService: CoursesService,
     private authService: AuthService,
-    private previousRouteService: PreviousRouteService
+    private previousRouteService: PreviousRouteService,
+    private courseService: CoursesService
   ) {
     this.searchForm = this.fb.group({
       search: [''],
@@ -70,5 +71,6 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl('/');
     this.previousRouteService.setPrevRoute(null);
+    this.courseService.getCoursesLocal()
   }
 }

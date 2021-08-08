@@ -29,7 +29,7 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
     private coursesService: CoursesService,
     private messageService: FalconMessageService,
     private loadingService: LoadingProgressService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formLandingPage = this.initForm();
@@ -53,7 +53,6 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
       .subscribe((val: any) => {
         this.loading = false;
         if (val) {
-          console.log(val);
 
           this.formLandingPage.patchValue({ ...val });
           if (!this.coursesService.editCourseData) {
@@ -119,7 +118,6 @@ export class CoursesLandingpageComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscription))
         .subscribe(
           (val) => {
-            console.log(val);
             this.loadingService.hideLoading();
             this.messageService.showSuccess(
               'Thành công',

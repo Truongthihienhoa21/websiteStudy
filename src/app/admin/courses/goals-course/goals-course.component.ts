@@ -32,7 +32,7 @@ export class GoalsCourseComponent implements OnInit, OnDestroy {
     private messageService: FalconMessageService,
     private route: ActivatedRoute,
     private loadingService: LoadingProgressService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.targetForm = this.initForm();
@@ -144,7 +144,6 @@ export class GoalsCourseComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.unsubscription))
         .subscribe(
           (val) => {
-            console.log(val);
             this.loadingService.hideLoading();
             this.messageService.showSuccess(
               'Thành công',

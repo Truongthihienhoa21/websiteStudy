@@ -105,7 +105,7 @@ export class CoursesDetailComponent implements OnInit, OnDestroy {
   addToCart(course) {
     // console.log(course);
 
-    if (!this.currentUserId && localStorage.getItem('userInfo')) {
+    if (!this.currentUserId && !localStorage.getItem('userInfo')) {
       this.displayDialog = true;
     } else {
       if (course.incart) {
@@ -141,11 +141,11 @@ export class CoursesDetailComponent implements OnInit, OnDestroy {
           this.displayDialog = false;
           localStorage.setItem('logged', 'true');
           this.authService.isLoginClient$.next(true);
-          this.messageService.showSuccess('Success', 'Login success');
+          this.messageService.showSuccess('Thành công', 'Đăng nhập thành công');
         },
         (err) => {
           this.loadingProgress.hideLoading();
-          this.messageService.showError('Error', 'Invalid credential');
+          this.messageService.showError('Lỗi', 'Thông tin không hợp lệ');
         }
       );
   }

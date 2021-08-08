@@ -24,9 +24,9 @@ export class CurriculumItemComponent implements OnInit {
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
     private messageService: FalconMessageService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   get formLists() {
     return this.parentForm.get('section') as FormArray;
@@ -64,7 +64,7 @@ export class CurriculumItemComponent implements OnInit {
   onDeleteSection(index) {
     this.confirmationService.confirm({
       message:
-        'You are about to remove a curriculum item. Are you sure you want to continue?',
+        'Bạn có muốn xóa bài học này không?',
       header: 'Please confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

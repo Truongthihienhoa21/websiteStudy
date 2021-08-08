@@ -76,8 +76,6 @@ export class ModalEditComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
 
     this.formEdit.valueChanges.subscribe(val => {
-      console.log(val);
-      console.log(this.initialValue);
 
       if (JSON.stringify(this.initialValue) !== JSON.stringify(val)) {
         this.isEdit = true;
@@ -92,7 +90,6 @@ export class ModalEditComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.formEdit.valid);
 
     const { value } = this.formEdit;
 

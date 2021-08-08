@@ -11,8 +11,14 @@
           *ngFor="let item of assign.chapters; index as i"
           [ngClass]="{ active: currentId === i }"
           (click)="onNavigate(i)"
-          >{{ i + 1 }}</span
         >
+          <ng-container *ngIf="item.done">
+            <i class="pi pi-check"></i>
+          </ng-container>
+          <ng-container *ngIf="!item.done">
+            {{ i + 1 }}
+          </ng-container>
+        </span>
       </div>
     </div>
 
@@ -85,3 +91,5 @@
     </p-splitter>
   </div>
 </div>
+
+<p-toast [baseZIndex]="1000000000000000"></p-toast>

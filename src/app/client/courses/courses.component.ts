@@ -69,6 +69,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     combineLatest([totalCourses, courseInCart, coursesHasBuy])
       .pipe(
         map(([courses, courseIncart, coursesHasBuy]) => {
+
           let result = [...courses];
 
           if (coursesHasBuy && coursesHasBuy.length > 0) {
@@ -136,7 +137,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   addToCart(course) {
-    if (!this.currentUserId && localStorage.getItem('logged') !== 'true') {
+
+    if (!this.currentUserId && !localStorage.getItem('userInfo')) {
       this.displayDialog = true;
     } else {
       if (course.inCart) {
@@ -163,11 +165,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
           this.displayDialog = false;
           localStorage.setItem('logged', 'true');
           this.authService.isLoginClient$.next(true);
-          this.messageService.showSuccess('Success', 'Login success');
+          this.messageService.showSuccess('Thành công', 'Đăng nhập thành công');
         },
         (err) => {
           this.loadingProgress.hideLoading();
-          this.messageService.showError('Error', 'Invalid credential');
+          this.messageService.showError('Lỗi', 'Đăng nhập không hợp lệ');
         }
       );
   }

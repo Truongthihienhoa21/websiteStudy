@@ -25,7 +25,7 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private messageService: FalconMessageService,
     private loadingService: LoadingProgressService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formCurriculum = this.initForm();
@@ -49,7 +49,6 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
       )
       .subscribe((val: any) => {
         if (val) {
-          console.log(val);
 
           this.dataCourse = val;
           const form = this.formCurriculum.get('section') as FormArray;

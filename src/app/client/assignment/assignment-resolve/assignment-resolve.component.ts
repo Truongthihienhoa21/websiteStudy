@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/service/auth.service';
+import { FalconMessageService } from 'src/app/service/falcon-message.service';
 import {
   AfterViewInit,
   Component,
@@ -32,7 +34,7 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
     language: 'typescript',
   };
   code: any;
-  output = '';
+  output: any;
   url = 'https://judge0-extra.p.rapidapi.com';
   headers = {
     'x-rapidapi-key': 'edb9f8abbemsh5f4e019a2d04baep1d54f9jsn7e130a5eb98b',
@@ -57,12 +59,13 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
     },
   ];
 
-  outputProp = [
-    { label: 'Input', value: '' },
-    { label: 'Actual output', value: '' },
-    { label: 'Expected output', value: '' },
-    { label: 'Execute time limit', value: 4000 },
-    { label: 'Execute time', value: '' },
+  outputProp: any = [
+    { label: 'Đầu vào', value: '' },
+    { label: 'Đầu ra thực tế', value: '' },
+    { label: 'Đầu ra mong muốn', value: '' },
+    { label: 'Giới hạn thời gian', value: 4000 },
+    { label: 'Thời gian thực hiện', value: '' },
+    { label: 'Tin nhắn', value: '' },
   ];
 
   task: any;
@@ -70,12 +73,18 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
   unsubscription = new Subject();
   assign: any;
   currentId: any;
+  originalAssign: any;
+  sectionIndx: any;
+  taskIndx: any;
+  userInfo: any;
   constructor(
     private monacoLoaderService: MonacoEditorLoaderService,
     private http: HttpClient,
     private route: ActivatedRoute,
     private assignService: AssignmentService,
-    private router: Router
+    private router: Router,
+    private messageService: FalconMessageService,
+    private authService: AuthService
   ) {
     this.monacoLoaderService.isMonacoLoaded$
       .pipe(
@@ -104,25 +113,65 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
   monacoComponent: MonacoEditorComponent;
 
   ngOnInit() {
-    this.route.params
-      .pipe(
-        tap(() => (this.loading = true)),
-        switchMap(({ id, section, task }) =>
-          combineLatest([
-            this.assignService.findById(id),
-            of(section),
-            of(task),
-          ])
-        ),
-        takeUntil(this.unsubscription)
-      )
-      .subscribe(([assign, section, task]: any) => {
-        this.assign = assign.lists_assignment[section - 1];
-        this.task = assign.lists_assignment[section - 1].chapters[task - 1];
-        this.outputProp[2].value = this.task.answer;
-        this.currentId = task - 1;
-        this.loading = false;
-      });
+    this.output = this.defaultOutput();
+    combineLatest([this.route.params, this.authService.userDetail$]).pipe(
+      switchMap(([idAss, userInfo]) => {
+        this.userInfo = userInfo;
+        const { id, section, task } = idAss;
+        this.sectionIndx = section;
+        this.taskIndx = task;
+        const assignment = userInfo.assignment;
+        if (assignment && assignment.length) {
+          const assDetail = assignment.find(ass => ass._id === idAss.id);
+          if (assDetail) {
+
+            return combineLatest([
+              of(assDetail),
+              of(section),
+              of(task),
+            ])
+          }
+        }
+        return combineLatest([
+          this.assignService.findById(id),
+          of(section),
+          of(task),
+        ])
+
+      }),
+      takeUntil(this.unsubscription)
+    ).subscribe(([assign, section, task]: any) => {
+      this.originalAssign = assign;
+      this.assign = assign.lists_assignment[section - 1];
+      this.task = assign.lists_assignment[section - 1].chapters[task - 1];
+      this.outputProp[2].value = this.task.answer;
+      this.currentId = task - 1;
+      this.loading = false;
+    });
+
+    // this.route.params
+    //   .pipe(
+    //     tap(() => (this.loading = true)),
+    //     switchMap(({ id, section, task }) => {
+    //       this.sectionIndx = section;
+    //       this.taskIndx = task;
+    //       return combineLatest([
+    //         this.assignService.findById(id),
+    //         of(section),
+    //         of(task),
+    //       ])
+    //     }
+    //     ),
+    //     takeUntil(this.unsubscription)
+    //   )
+    //   .subscribe(([assign, section, task]: any) => {
+    //     this.originalAssign = assign;
+    //     this.assign = assign.lists_assignment[section - 1];
+    //     this.task = assign.lists_assignment[section - 1].chapters[task - 1];
+    //     this.outputProp[2].value = this.task.answer;
+    //     this.currentId = task - 1;
+    //     this.loading = false;
+    //   });
 
     this.getLanguages()
       .pipe(takeUntil(this.unsubscription))
@@ -146,6 +195,7 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
   }
 
   onNavigate(index) {
+    this.output = this.defaultOutput()
     this.route.params
       .pipe(takeUntil(this.unsubscription))
       .subscribe(({ id, section, task }) => {
@@ -199,16 +249,46 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
           // console.log(val);
           if (val.stdout) {
             const result = atob(val.stdout);
+
+
             this.outputProp[1].value = result;
-            this.outputProp[4].value = val.time;
+            if (this.outputProp[2].value.trim() == result.trim()) {
+              this.outputProp[4].value = val.time;
+              this.outputProp[5].value = 'Kết quả đúng';
+              console.log(this.originalAssign, this.assign, this.sectionIndx, this.task);
+              this.task.done = true;
+              this.originalAssign.lists_assignment[this.sectionIndx - 1].chapters[this.taskIndx - 1] = { ...this.task }
+              this.authService.userDetail$.pipe(
+                switchMap(val => {
+                  const userAss = val.assignment ? val.assignment : []
+                  const body = { ...val, assignment: [...userAss, this.originalAssign] }
+
+                  return this.authService.updateUser(val._id, body)
+                }),
+                takeUntil(this.unsubscription)
+              ).subscribe(
+                (val: any) => {
+                  this.authService.userInfo.next(val._id)
+                }
+              )
+              this.messageService.showSuccess(`Chúc mừng ${this.userInfo.username}`, 'Bạn vừa hoàn thành bài tập này.')
+            } else {
+              this.outputProp[4].value = val.time;
+              this.outputProp[5].value = 'Kết quả sai';
+            }
+
           } else if (val.stderr) {
             const error = atob(val.stderr);
-            this.outputProp[1].value = error;
+            this.outputProp[1].value = '';
             this.outputProp[4].value = val.time;
+            this.outputProp[5].value = error;
+
           } else {
             const compilation_error = atob(val.compile_output);
-            this.outputProp[1].value = compilation_error;
+            this.outputProp[1].value = '';
             this.outputProp[4].value = val.time;
+            this.outputProp[5].value = compilation_error;
+
           }
         },
         (err) => {
@@ -232,7 +312,6 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
           this.output = '';
         },
         (err) => {
-          console.log(err);
         }
       );
   }
@@ -241,5 +320,16 @@ export class AssignmentResolveComponent implements OnInit, OnDestroy {
     return this.http.get<any[]>(`${this.url}/languages`, {
       headers: this.headers,
     });
+  }
+
+  defaultOutput() {
+    return ([
+      { label: 'Đầu vào', value: '' },
+      { label: 'Đầu ra thực tế', value: '' },
+      { label: 'Đầu ra mong muốn', value: '' },
+      { label: 'Giới hạn thời gian', value: 4000 },
+      { label: 'Thời gian thực hiện', value: '' },
+      { label: 'Tin nhắn', value: '' },
+    ]);
   }
 }

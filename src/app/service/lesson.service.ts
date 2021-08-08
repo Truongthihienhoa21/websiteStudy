@@ -219,7 +219,6 @@ export class LessonService extends CollectionService<PostState> {
         if (!currentPosts) {
           return this.find<Partial<Post>>(params).pipe(
             tap((val) => {
-              console.log(val);
 
               this.setState({ postsEdit: [...val] });
             })

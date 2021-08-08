@@ -184,6 +184,25 @@ export class AuthService {
     );
   }
 
+  getUserAssignment(id: string): Observable<any[]> {
+    const params = new HttpParams().set('fields', 'assignment');
+    return this.http.get<any[]>(`${this.userUrl}/${id}`, { params }).pipe(
+      map((value: any) => {
+        let assignment;
+        if (!value.assignment) {
+          assignment = [];
+        } else {
+          assignment = [...value.assignment];
+        }
+        return assignment;
+      }),
+      catchError((err) => {
+        return of(false);
+      })
+    );
+  }
+
+
   updateUser(userId, body) {
     return this.http.put(`${this.userUrl}/${userId}`, body);
   }
