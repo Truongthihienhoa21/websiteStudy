@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { combineLatest, from, Observable, Subject } from 'rxjs';
-import { finalize, mergeMap, take, takeUntil, toArray } from 'rxjs/operators';
+import { finalize, mergeMap, shareReplay, take, takeUntil, toArray } from 'rxjs/operators';
 import { LoadingProgressService } from 'src/app/loading-progress/loading-progress.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { CoursesService } from 'src/app/service/courses.service';
@@ -46,11 +46,12 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   getUser() {
-    const allUser$ = this.authService.getAllUser();
+    const allUser$ = this.authService.getAllUser().pipe(shareReplay());
     const currentUser$ = this.authService.userDetail$;
     combineLatest([allUser$, currentUser$])
       .pipe(takeUntil(this.unsubscription$))
       .subscribe(([allUser, currentUser]) => {
+        
         this.userLists = allUser;
         this.userAccess = {
           priority: currentUser.priority,

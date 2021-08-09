@@ -73,8 +73,9 @@ export class CoursesCurriculumComponent implements OnInit, OnDestroy {
           if (!this.coursesService.editCourseData) {
             this.coursesService.editCourse.next(val);
           }
-          this.loadingService.hideLoading();
+         
         }
+        this.loadingService.hideLoading();
       });
   }
 

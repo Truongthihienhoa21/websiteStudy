@@ -28,12 +28,11 @@ const initialAuthState: AuthState = {
 })
 export class AuthService {
   private roleIdAdmin = [
-    'f864900b-f61a-427a-8984-b9a6181fc814',
-    '71df7182-248e-471b-9d72-37bae5c55be0',
+    '65668d68-825f-41e5-b531-55de8ebb76d9',
     '23339ab0-df69-433f-9ab1-92515fc5e132'
   ];
   listRoles = {
-    'f864900b-f61a-427a-8984-b9a6181fc814': 'admin',
+    '23339ab0-df69-433f-9ab1-92515fc5e132': 'admin',
     '65668d68-825f-41e5-b531-55de8ebb76d9': 'user',
     '4bdf91ed-7ace-4615-9639-d1a632e00d3e': 'supporter',
   };
@@ -152,7 +151,8 @@ export class AuthService {
   }
 
   getAllUser(): Observable<User[]> {
-    return this.http.get<any[]>(this.userUrl).pipe(
+    const params = new HttpParams().set('fields','email,firstName,lastName,_kmd,username,learning',)
+    return this.http.get<any[]>(this.userUrl, {params}).pipe(
       map((users) => users.map((user) => this.mapUser(user, 'http'))),
       catchError((err) => throwError(err))
     );
