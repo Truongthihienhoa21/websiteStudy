@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         else {
           localStorage.setItem('logged', 'true');
-          this.messageService.showSuccess('Thành công', 'Đăng nhập thành công');
+          this.messageService.showSuccess('Success', 'Login success');
           this.coursesService.getCoursesLocal();
           this.authService.isLoginClient$.next(true);
           if (prevRoute) {
@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       (err) => {
         this.loading = false;
         this.loginFail = true;
-        this.messageService.showError('Lỗi', 'Thông tin không hợp lệ');
+        this.messageService.showError('Error', 'Invalid credential');
       }
     );
   }

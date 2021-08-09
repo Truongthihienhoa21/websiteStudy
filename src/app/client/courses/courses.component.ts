@@ -169,7 +169,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
         },
         (err) => {
           this.loadingProgress.hideLoading();
-          this.messageService.showError('Lỗi', 'Đăng nhập không hợp lệ');
+          this.messageService.showError('Error', 'Invalid credential');
         }
       );
   }

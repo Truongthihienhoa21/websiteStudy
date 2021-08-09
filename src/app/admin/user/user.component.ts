@@ -34,7 +34,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private loadingService: LoadingProgressService,
     private coursesService: CoursesService,
     private messageService: FalconMessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -51,7 +51,7 @@ export class UserComponent implements OnInit, OnDestroy {
     combineLatest([allUser$, currentUser$])
       .pipe(takeUntil(this.unsubscription$))
       .subscribe(([allUser, currentUser]) => {
-        
+
         this.userLists = allUser;
         this.userAccess = {
           priority: currentUser.priority,
@@ -109,7 +109,7 @@ export class UserComponent implements OnInit, OnDestroy {
         },
         (err) => {
           this.loadingService.hideLoading();
-          this.messageService.showError('Thất bại', 'Đã có lỗi xảy ra');
+          this.messageService.showError('Error', 'Invalid credential');
         }
       );
   }
@@ -131,7 +131,7 @@ export class UserComponent implements OnInit, OnDestroy {
       .subscribe(
         (val) => {
           this.messageService.showSuccess(
-            'Thành công',
+            'Success',
             'Đã thêm người dùng mới'
           );
 
@@ -139,7 +139,7 @@ export class UserComponent implements OnInit, OnDestroy {
           this.hideDialog();
         },
         (err) => {
-          this.messageService.showError('Thất bại', 'Đã có lỗi xảy ra');
+          this.messageService.showError('Error', 'Invalid credential');
         }
       );
   }
@@ -257,7 +257,7 @@ export class UserComponent implements OnInit, OnDestroy {
               this.getUser();
             },
             (err) => {
-              this.messageService.showError('Lỗi', 'Đã có lỗi xảy ra');
+              this.messageService.showError('Error', 'Invalid credential');
             }
           );
       },

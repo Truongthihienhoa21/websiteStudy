@@ -141,11 +141,11 @@ export class CoursesDetailComponent implements OnInit, OnDestroy {
           this.displayDialog = false;
           localStorage.setItem('logged', 'true');
           this.authService.isLoginClient$.next(true);
-          this.messageService.showSuccess('Thành công', 'Đăng nhập thành công');
+          this.messageService.showSuccess('Success', 'Đăng nhập thành công');
         },
         (err) => {
           this.loadingProgress.hideLoading();
-          this.messageService.showError('Lỗi', 'Thông tin không hợp lệ');
+          this.messageService.showError('Error', 'Invalid credential');
         }
       );
   }
